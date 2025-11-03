@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "maroctour.fullname" . }}-api
+  labels:
+    app: {{ include "maroctour.name" . }}-api
+    {{- include "maroctour.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.api.autoscaling.enabled }}
+  replicas: {{ .Values.api.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ include "maroctour.name" . }}-api
+  template:
+    metadata:
+      labels:
+        app: {{ include "maroctour.name" . }}-api
+    spec:
+      containers:
+      - name: api
+        image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+        imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.api.service.port }}
+          protocol: TCP
+        env:
+        {{- toYaml .Values.api.env | nindent 8 }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          {{- toYaml .Values.api.resources | nindent 10 }}
+

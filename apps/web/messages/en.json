@@ -1,0 +1,80 @@
+{
+  "navigation": {
+    "home": "Home",
+    "map": "Map",
+    "itineraries": "Itineraries",
+    "quiz": "Quiz",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "Discover Morocco",
+      "subtitle": "Explore the cities, cultures and landscapes of the Kingdom",
+      "exploreMap": "Explore map",
+      "itineraries": "View itineraries"
+    },
+    "features": {
+      "title": "Everything to plan your trip",
+      "map": {
+        "title": "Interactive Map",
+        "description": "Discover Moroccan cities on a modern vector map"
+      },
+      "itineraries": {
+        "title": "Itineraries",
+        "description": "Organized tours for all tastes and budgets"
+      },
+      "quiz": {
+        "title": "Cultural Quiz",
+        "description": "Test your knowledge about Morocco and challenge your friends"
+      },
+      "contact": {
+        "title": "Contact Us",
+        "description": "Any questions? Our team is here to help"
+      }
+    },
+    "topScores": {
+      "title": "Top Scores",
+      "participate": "Take the quiz"
+    },
+    "cta": {
+      "title": "Ready for an adventure?",
+      "description": "Start exploring Morocco now",
+      "button": "Get started"
+    }
+  },
+  "map": {
+    "title": "Cities Map",
+    "description": "Explore Morocco's main cities. Click on a marker for more information.",
+    "citiesList": "Cities List",
+    "loading": "Loading map..."
+  },
+  "quiz": {
+    "title": "Cultural Quiz",
+    "description": "Test your knowledge about Moroccan cities",
+    "start": "Start quiz",
+    "next": "Next question",
+    "finish": "Finish",
+    "yourScore": "Your score",
+    "outOf": "out of"
+  },
+  "footer": {
+    "tagline": "Explore Morocco like never before",
+    "explore": {
+      "title": "Explore",
+      "map": "Map",
+      "itineraries": "Itineraries",
+      "quiz": "Quiz"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookies": "Cookies"
+    },
+    "contact": {
+      "title": "Contact"
+    },
+    "rights": "All rights reserved."
+  }
+}
+

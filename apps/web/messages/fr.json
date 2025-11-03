@@ -1,0 +1,80 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "map": "Carte",
+    "itineraries": "Itinéraires",
+    "quiz": "Quiz",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "Découvrez le Maroc",
+      "subtitle": "Explorez les villes, cultures et paysages du Royaume",
+      "exploreMap": "Explorer la carte",
+      "itineraries": "Voir les itinéraires"
+    },
+    "features": {
+      "title": "Tout pour préparer votre voyage",
+      "map": {
+        "title": "Carte Interactive",
+        "description": "Découvrez les villes du Maroc sur une carte vectorielle moderne"
+      },
+      "itineraries": {
+        "title": "Itinéraires",
+        "description": "Des circuits organisés pour tous les goûts et budgets"
+      },
+      "quiz": {
+        "title": "Quiz Culturel",
+        "description": "Testez vos connaissances sur le Maroc et défiez vos amis"
+      },
+      "contact": {
+        "title": "Contactez-nous",
+        "description": "Une question ? Notre équipe est là pour vous aider"
+      }
+    },
+    "topScores": {
+      "title": "Meilleurs Scores",
+      "participate": "Participer au quiz"
+    },
+    "cta": {
+      "title": "Prêt à partir à l'aventure ?",
+      "description": "Commencez dès maintenant votre exploration du Maroc",
+      "button": "Commencer"
+    }
+  },
+  "map": {
+    "title": "Carte des Villes",
+    "description": "Explorez les principales villes du Maroc. Cliquez sur un marqueur pour plus d'informations.",
+    "citiesList": "Liste des Villes",
+    "loading": "Chargement de la carte..."
+  },
+  "quiz": {
+    "title": "Quiz Culturel",
+    "description": "Testez vos connaissances sur les villes du Maroc",
+    "start": "Commencer le quiz",
+    "next": "Question suivante",
+    "finish": "Terminer",
+    "yourScore": "Votre score",
+    "outOf": "sur"
+  },
+  "footer": {
+    "tagline": "Explorez le Maroc comme jamais auparavant",
+    "explore": {
+      "title": "Explorer",
+      "map": "Carte",
+      "itineraries": "Itinéraires",
+      "quiz": "Quiz"
+    },
+    "legal": {
+      "title": "Légal",
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "cookies": "Cookies"
+    },
+    "contact": {
+      "title": "Contact"
+    },
+    "rights": "Tous droits réservés."
+  }
+}
+
