@@ -21,23 +21,74 @@ export function MapClient({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!mapContainer.current || map.current) return;
-
-    const apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
-    if (!apiKey) {
-      console.error('MapTiler API key is missing');
-      setError('Clé MapTiler manquante');
+    console.log('🔄 UseEffect appelé - mapContainer:', !!mapContainer.current, 'map exists:', !!map.current);
+    console.log('📦 MapLibre GL imported:', !!maplibregl);
+    
+    if (!mapContainer.current) {
+      console.error('❌ mapContainer.current est null!');
+      setError('Erreur: Container de carte non trouvé');
+      setLoading(false);
+      return;
+    }
+    
+    if (map.current) {
+      console.log('⚠️ Map existe déjà, ignoring...');
       return;
     }
 
+    const apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
+    console.log('🔑 API Key:', apiKey ? 'Présente' : 'Absente');
+    
+    // Configuration de style avec fallback
+    let mapStyle;
+    if (apiKey && apiKey !== 'get_your_own_OpIi9ZULNHzrESv6T2vL') {
+      console.log('🗺️ Tentative avec MapTiler...');
+      mapStyle = `https://api.maptiler.com/maps/streets-v2/style.json?key=${apiKey}`;
+    } else {
+      console.log('🗺️ Utilisation d\'OpenStreetMap (fallback)...');
+      mapStyle = {
+        version: 8 as const,
+        sources: {
+          'osm-tiles': {
+            type: 'raster' as const,
+            tiles: [
+              'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+            ],
+            tileSize: 256,
+            attribution: '© OpenStreetMap contributors'
+          }
+        },
+        layers: [
+          {
+            id: 'osm-tiles',
+            type: 'raster' as const,
+            source: 'osm-tiles',
+            minzoom: 0,
+            maxzoom: 19
+          }
+        ]
+      };
+    }
+
+    console.log('🚀 Initialisation de la carte...', { center, zoom, cities: cities.length });
+
     // Initialize map
-    map.current = new maplibregl.Map({
-      container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${apiKey}`,
-      center: center,
-      zoom: zoom,
-      attributionControl: { compact: true },
-    });
+    try {
+      map.current = new maplibregl.Map({
+        container: mapContainer.current,
+        style: mapStyle,
+        center: center,
+        zoom: zoom,
+        attributionControl: { compact: true },
+      });
+
+      console.log('✅ Carte créée avec succès');
+    } catch (error) {
+      console.error('❌ Erreur lors de la création de la carte:', error);
+      setError('Erreur d\'initialisation de la carte');
+      setLoading(false);
+      return;
+    }
 
     // Add navigation controls
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
@@ -63,6 +114,7 @@ export function MapClient({
     });
 
     map.current.on('load', () => {
+      console.log('🎉 Carte chargée avec succès!');
       setLoading(false);
       
       if (!map.current) return;

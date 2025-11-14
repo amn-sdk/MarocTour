@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
-import { MapClient } from '@/components/map/map-client';
+import { MapFixed } from '@/components/map/map-fixed';
 import { cities } from '@/data/cities';
 
 export const metadata = {
@@ -26,7 +26,7 @@ export default function MapPage({
       </div>
       
       <div className="rounded-lg overflow-hidden border shadow-lg">
-        <MapClient cities={cities} />
+        <MapFixed cities={cities} />
       </div>
 
       {/* Cities List (Alternative for accessibility) */}
