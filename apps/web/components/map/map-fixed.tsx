@@ -83,10 +83,59 @@ export function MapFixed({
             markerElement.style.border = '2px solid white';
             markerElement.style.cursor = 'pointer';
             markerElement.title = city.name;
+            markerElement.setAttribute('data-city-slug', city.slug);
+            markerElement.setAttribute('aria-label', `Marqueur pour ${city.name}`);
+            markerElement.setAttribute('tabindex', '0');
 
-            new maplibregl.default.Marker({ element: markerElement })
+            // Popup avec bouton de navigation
+            const popup = new maplibregl.default.Popup({
+              offset: 25,
+              closeButton: true,
+              closeOnClick: false,
+            }).setHTML(`
+              <div class="p-3 min-w-[200px]">
+                <h3 class="font-bold text-lg mb-2">${city.name}</h3>
+                <p class="text-sm text-gray-600 mb-3">${city.region}</p>
+                <p class="text-xs text-gray-500 mb-3">Population: ${city.population?.toLocaleString()}</p>
+                <button 
+                  id="send-element-${city.slug}"
+                  class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+                  data-city-slug="${city.slug}"
+                >
+                  🏛️ Découvrir ${city.name}
+                </button>
+              </div>
+            `);
+
+            const marker = new maplibregl.default.Marker({ element: markerElement })
               .setLngLat([city.longitude, city.latitude])
+              .setPopup(popup)
               .addTo(map);
+
+            // Navigation au clic sur le marqueur ou bouton
+            const handleNavigation = () => {
+              console.log(`🚀 Navigation vers /city/${city.slug}`);
+              window.open(`/city/${city.slug}`, '_blank');
+            };
+
+            // Clic sur le marqueur
+            markerElement.addEventListener('click', handleNavigation);
+            
+            // Support clavier sur le marqueur
+            markerElement.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleNavigation();
+              }
+            });
+
+            // Clic sur le bouton "Send Element" dans le popup
+            popup.on('open', () => {
+              const sendButton = document.getElementById(`send-element-${city.slug}`);
+              if (sendButton) {
+                sendButton.addEventListener('click', handleNavigation);
+              }
+            });
           });
 
           console.log('✅ Tous les marqueurs ajoutés');

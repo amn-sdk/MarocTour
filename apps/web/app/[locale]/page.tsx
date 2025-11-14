@@ -20,7 +20,7 @@ export default function HomePage({
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: 'url(/images/morocco-hero.jpg)',
+            backgroundImage: 'url(/images/marocpageaccueil.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'brightness(0.7)',

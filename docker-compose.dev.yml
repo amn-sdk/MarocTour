@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # Frontend Next.js avec hot reload
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+      - "7001:7001"  # Port alternatif pour dev
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=7001
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - NEXT_PUBLIC_APP_URL=http://localhost:7001
+      - NEXT_PUBLIC_MAPTILER_KEY=get_your_own_OpIi9ZULNHzrESv6T2vL
+    command: npm run dev -- --port 7001 --hostname 0.0.0.0
+    networks:
+      - maroctour-dev
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7001/api/cities/nador || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backend API (si nécessaire)
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/app
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/maroctour_dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - maroctour-dev
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=maroctour_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./apps/api/scripts/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - maroctour-dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis pour le cache (optionnel)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - maroctour-dev
+    command: redis-server --appendonly yes
+
+networks:
+  maroctour-dev:
+    driver: bridge
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:

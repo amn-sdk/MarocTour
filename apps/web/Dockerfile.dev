@@ -1,0 +1,41 @@
+# Dockerfile.dev pour développement Next.js avec hot reload
+FROM node:20-alpine
+
+# Installer les dépendances système
+RUN apk add --no-cache \
+    libc6-compat \
+    curl
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Installer pnpm globalement
+RUN npm install -g pnpm
+
+# Copier les fichiers de dépendances
+COPY package.json pnpm-lock.yaml ./
+
+# Installer les dépendances
+RUN pnpm install --frozen-lockfile
+
+# Copier le reste du code (sera remplacé par bind mount en dev)
+COPY . .
+
+# Créer le répertoire .next avec les bonnes permissions
+RUN mkdir -p .next && chown -R node:node .next
+
+# Exposer les ports
+EXPOSE 3000 7001
+
+# Utiliser l'utilisateur non-root
+USER node
+
+# Variables d'environnement pour le développement
+ENV NODE_ENV=development
+ENV HOST=0.0.0.0
+ENV PORT=7001
+ENV CHOKIDAR_USEPOLLING=true
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Commande par défaut (peut être surchargée dans docker-compose)
+CMD ["pnpm", "dev", "--port", "7001", "--hostname", "0.0.0.0"]
