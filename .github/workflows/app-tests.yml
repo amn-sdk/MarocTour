@@ -1,4 +1,4 @@
-name: App Tests
+name: CI - App Tests
 
 on:
   push:
