@@ -1,4 +1,4 @@
-name: Deploy to Kubernetes
+name: CD - Deploy to Kubernetes
 
 on:
   push:
@@ -17,8 +17,8 @@ jobs:
 
       - name: Update image tags
         run: |
-          sed -i "s|IMAGE_BACKEND|${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ github.sha }}|g" k8s/backend-deployment.yaml
-          sed -i "s|IMAGE_FRONTEND|${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
+          sed -i "s|IMAGE_BACKEND|${{ secrets.DOCKERHUB_USERNAME }}/maroctour-backend:${{ github.sha }}|g" k8s/backend-deployment.yaml
+          sed -i "s|IMAGE_FRONTEND|${{ secrets.DOCKERHUB_USERNAME }}/maroctour-frontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
 
       - name: Apply Kubernetes manifests
         run: |

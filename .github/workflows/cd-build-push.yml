@@ -1,4 +1,4 @@
-name: Build and Push Images
+name: CD - Build and Push Images
 
 on:
   push:
@@ -20,11 +20,11 @@ jobs:
       - name: Build and push backend
         working-directory: apps/api
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ github.sha }} .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/MarocTour-backend:${{ github.sha }} .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/MarocTour-backend:${{ github.sha }}
 
       - name: Build and push frontend
         working-directory: apps/web
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ github.sha }} .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/MarocTour-frontend:${{ github.sha }} .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/MarocTour-frontend:${{ github.sha }}

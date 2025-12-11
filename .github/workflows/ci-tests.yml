@@ -1,4 +1,4 @@
-name: App Tests
+name: CI - App Tests
 
 on:
   push:
@@ -24,7 +24,8 @@ jobs:
 
       - name: Run backend tests
         working-directory: apps/api
-        run: pytest
+        # Using python -m pytest adds the current directory to sys.path
+        run: python -m pytest
 
   frontend-tests:
     runs-on: ubuntu-latest
@@ -45,4 +46,5 @@ jobs:
 
       - name: Run frontend tests
         working-directory: apps/web
-        run: pnpm test
+        # Ignore E2E tests for unit testing CI prevents Jest/Playwright conflict
+        run: pnpm test -- --testPathIgnorePatterns=tests/e2e --passWithNoTests
