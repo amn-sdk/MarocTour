@@ -373,3 +373,41 @@ MIT License - voir [LICENSE](LICENSE)
 
 **🎉 Bon développement avec MarocTour !**
 
+---
+
+# 🎓 Projet DevOps Final (ESIEE)
+
+Ce projet respecte la structure demandée pour le projet final DevOps.
+
+## 🏗 Structure du Repo
+
+- `apps/api` : Backend (FastAPI + Python) - correspond au dossier `backend/` du sujet.
+- `apps/web` : Frontend (Next.js) - correspond au dossier `frontend/` du sujet.
+- `k8s/` : Manifests Kubernetes (Deployment, Service, ConfigMap, Secret).
+- `.github/workflows/` : Pipelines CI/CD.
+
+## ☸️ Kubernetes (Raw Manifests)
+
+Les manifests se trouvent dans `k8s/`.
+Pour déployer :
+
+```bash
+kubectl apply -f k8s/configmap.yaml
+kubectl apply -f k8s/secret.yaml
+kubectl apply -f k8s/postgres-deployment.yaml
+kubectl apply -f k8s/postgres-service.yaml
+kubectl apply -f k8s/backend-deployment.yaml
+kubectl apply -f k8s/backend-service.yaml
+kubectl apply -f k8s/frontend-deployment.yaml
+kubectl apply -f k8s/frontend-service.yaml
+```
+
+## 🔄 CI/CD Pipelines
+
+Trois workflows sont configurés dans `.github/workflows/` :
+
+1. **App Tests** (`app-tests.yml`) : Lance les tests backend (`pytest`) et frontend (`pnpm test`) à chaque Push/PR.
+2. **Build and Push** (`build-and-push.yml`) : Construit et push les images Docker sur Docker Hub (déclenché sur push `main` ou tags).
+3. **Deploy to Kubernetes** (`deploy-k8s.yml`) : Met à jour les déploiements K8s avec les nouvelles images.
+
+

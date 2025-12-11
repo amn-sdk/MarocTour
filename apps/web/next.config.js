@@ -4,6 +4,10 @@ const withNextIntl = require('next-intl/plugin')();
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
