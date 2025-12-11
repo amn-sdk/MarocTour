@@ -25,10 +25,10 @@ jobs:
       - name: Run backend tests
         working-directory: apps/api
         env:
-          DATABASE_URL: sqlite:///:memory:
-          SECRET_KEY: test_secret_key_min_32_characters_long
-          MINIO_ACCESS_KEY: test
-          MINIO_SECRET_KEY: test
+          DATABASE_URL: "sqlite:///:memory:"
+          SECRET_KEY: "test_secret_key_min_32_characters_long"
+          MINIO_ACCESS_KEY: "test"
+          MINIO_SECRET_KEY: "test"
         # Using python -m pytest adds the current directory to sys.path
         run: python -m pytest
 
