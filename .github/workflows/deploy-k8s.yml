@@ -10,28 +10,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set kubeconfig
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+
 
       - name: Update image tags
         run: |
           sed -i "s|IMAGE_BACKEND|${{ secrets.DOCKERHUB_USERNAME }}/maroctour-backend:${{ github.sha }}|g" k8s/backend-deployment.yaml
           sed -i "s|IMAGE_FRONTEND|${{ secrets.DOCKERHUB_USERNAME }}/maroctour-frontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
 
-      - name: Apply Kubernetes manifests
-        run: |
-          kubectl apply -f k8s/configmap.yaml
-          kubectl apply -f k8s/secret.yaml
-          kubectl apply -f k8s/postgres-deployment.yaml
-          kubectl apply -f k8s/postgres-service.yaml
-          kubectl apply -f k8s/backend-deployment.yaml
-          kubectl apply -f k8s/backend-service.yaml
-          kubectl apply -f k8s/frontend-deployment.yaml
-          kubectl apply -f k8s/frontend-service.yaml
+      - name: Save updated manifests
+        uses: actions/upload-artifact@v4
+        with:
+          name: kubernetes-manifests
+          path: k8s/
 
-      - name: Check rollout
+      - name: Deployment Instructions
         run: |
-          kubectl rollout status deployment/backend-deployment
-          kubectl rollout status deployment/frontend-deployment
+          echo "✅ Manifests updated with image tag: ${{ github.sha }}"
+          echo ""
+          echo "📝 To deploy to your local Minikube cluster:"
+          echo "1. Download the artifacts from this workflow run"
+          echo "2. Run your local script: ./manual_deploy.sh"
+          echo "   (It will apply these files to your local cluster)"
