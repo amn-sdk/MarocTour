@@ -1,4 +1,4 @@
-name: CD - Deploy to Kubernetes
+name: Deploy to Kubernetes
 
 on:
   push:
@@ -6,11 +6,14 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-
+      - name: Set kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
 
       - name: Update image tags
         run: |
