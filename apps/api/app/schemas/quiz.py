@@ -50,8 +50,9 @@ class QuizAttemptCreate(BaseModel):
     city_id: UUID
     player_name: str = Field(..., min_length=1, max_length=200)
     answers: list[dict] = Field(
-        ..., description="List of answers: [{question_id, selected_index}]"
+        default=[], description="List of answers: [{question_id, selected_index}]"
     )
+    score: Optional[int] = None
 
 
 class QuizAttemptResponse(BaseModel):
@@ -74,6 +75,7 @@ class TopScoresResponse(BaseModel):
     player_name: str
     score: int
     city_id: UUID
+    city_name: str
     completed_at: datetime
 
     class Config:
