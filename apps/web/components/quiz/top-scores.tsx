@@ -6,17 +6,41 @@ interface TopScoresProps {
   limit?: number;
 }
 
+import { useEffect, useState } from 'react';
+
+interface TopScore {
+  player_name: string;
+  score: number;
+  city_name: string;
+  completed_at: string;
+}
+
 export function TopScores({ limit = 10 }: TopScoresProps) {
   const t = useTranslations('quiz');
-  
-  // Mock data - in production, fetch from API
-  const scores = [
-    { rank: 1, name: 'Ahmed', score: 95, city: 'Marrakech' },
-    { rank: 2, name: 'Fatima', score: 92, city: 'Casablanca' },
-    { rank: 3, name: 'Youssef', score: 88, city: 'Fès' },
-    { rank: 4, name: 'Sara', score: 85, city: 'Rabat' },
-    { rank: 5, name: 'Omar', score: 82, city: 'Tanger' },
-  ].slice(0, limit);
+  const [scores, setScores] = useState<TopScore[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchScores = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/v1/quiz/top-scores?limit=' + limit);
+        if (response.ok) {
+          const data = await response.json();
+          setScores(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch scores:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchScores();
+  }, [limit]);
+
+  if (loading) {
+    return <div className="text-center py-8">Loading scores...</div>;
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -25,25 +49,33 @@ export function TopScores({ limit = 10 }: TopScoresProps) {
           <thead className="bg-muted">
             <tr>
               <th className="px-4 py-3 text-left text-sm font-semibold">#</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Nom</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Ville</th>
-              <th className="px-4 py-3 text-right text-sm font-semibold">Score</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold">{t('name') || 'Nom'}</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold">{t('city') || 'Ville'}</th>
+              <th className="px-4 py-3 text-right text-sm font-semibold">{t('score') || 'Score'}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {scores.map((score) => (
-              <tr key={score.rank} className="hover:bg-muted/50 transition-colors">
-                <td className="px-4 py-3 text-sm">
-                  {score.rank === 1 && '🥇'}
-                  {score.rank === 2 && '🥈'}
-                  {score.rank === 3 && '🥉'}
-                  {score.rank > 3 && score.rank}
+            {scores.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">
+                  No scores yet. Be the first!
                 </td>
-                <td className="px-4 py-3 text-sm font-medium">{score.name}</td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">{score.city}</td>
-                <td className="px-4 py-3 text-sm font-bold text-right">{score.score}%</td>
               </tr>
-            ))}
+            ) : (
+              scores.map((score, index) => (
+                <tr key={index} className="hover:bg-muted/50 transition-colors">
+                  <td className="px-4 py-3 text-sm">
+                    {index === 0 && '🥇'}
+                    {index === 1 && '🥈'}
+                    {index === 2 && '🥉'}
+                    {index > 2 && index + 1}
+                  </td>
+                  <td className="px-4 py-3 text-sm font-medium">{score.player_name}</td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">{score.city_name}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-right">{score.score}%</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

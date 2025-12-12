@@ -15,5 +15,5 @@ api_router.include_router(quiz.router)
 # Health check for API v1
 @api_router.get("/health")
 def api_health():
-    return {"status": "ok", "version": "v1"}
+    return {"status": "ok_modified", "version": "v1"}
 

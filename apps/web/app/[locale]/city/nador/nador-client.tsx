@@ -24,11 +24,11 @@ async function getNadorData() {
     const response = await fetch('/api/cities/nador', {
       cache: 'force-cache'
     });
-    
+
     if (!response.ok) {
       throw new Error('Failed to fetch Nador data');
     }
-    
+
     return response.json();
   } catch (error) {
     console.error('Error fetching Nador data:', error);
@@ -48,7 +48,7 @@ export default function NadorPageClient() {
     });
   }, []);
 
-  const handleQuizComplete = (score: number, totalQuestions: number, timeSpent: number, playerName: string) => {
+  const handleQuizComplete = async (score: number, totalQuestions: number, timeSpent: number, playerName: string) => {
     const percentage = Math.round((score / totalQuestions) * 100);
     const newScore: QuizScore = {
       id: Date.now().toString(),
@@ -60,8 +60,36 @@ export default function NadorPageClient() {
       city: 'Nador',
       timeSpent
     };
-    
+
     setCurrentScore(newScore);
+
+    // Submit to backend
+    try {
+      // 1. Get City ID
+      const cityRes = await fetch('http://localhost:8000/api/v1/cities/slug/nador');
+      if (!cityRes.ok) throw new Error('Failed to fetch city ID');
+      const cityData = await cityRes.json();
+
+      // 2. Submit Attempt
+      const attemptRes = await fetch('http://localhost:8000/api/v1/quiz/attempt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          city_id: cityData.id,
+          player_name: playerName,
+          answers: [], // Optional now
+          score: percentage // Sending calculated percentage as score
+        })
+      });
+
+      if (!attemptRes.ok) {
+        console.error('Failed to submit score to backend');
+      } else {
+        console.log('Score submitted successfully!');
+      }
+    } catch (error) {
+      console.error('Error submitting score:', error);
+    }
   };
 
   if (loading) {
@@ -98,7 +126,7 @@ export default function NadorPageClient() {
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           {/* Image de gauche - nador.jpg */}
-          <div 
+          <div
             className="absolute top-0 left-0 w-1/2 h-full"
             style={{
               backgroundImage: 'url(/images/cities/nador/nador.jpg)',
@@ -107,9 +135,9 @@ export default function NadorPageClient() {
               backgroundRepeat: 'no-repeat',
             }}
           />
-          
+
           {/* Image de droite - Maroc_nador.jpg */}
-          <div 
+          <div
             className="absolute top-0 right-0 w-1/2 h-full"
             style={{
               backgroundImage: 'url(/images/cities/nador/Maroc_nador.jpg)',
@@ -118,11 +146,11 @@ export default function NadorPageClient() {
               backgroundRepeat: 'no-repeat',
             }}
           />
-          
+
           {/* Overlay sombre pour la lisibilité du texte */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/50" />
         </div>
-        
+
         <div className="relative z-10 text-center text-white px-4 max-w-4xl">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">
             {data.hero.title}
@@ -130,7 +158,7 @@ export default function NadorPageClient() {
           <p className="text-xl md:text-2xl mb-8 drop-shadow-md">
             {data.hero.subtitle}
           </p>
-          
+
           <div className="flex flex-wrap gap-4 justify-center text-sm">
             <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
               <MapPin className="h-4 w-4" />
@@ -201,7 +229,7 @@ export default function NadorPageClient() {
                       {index + 1}
                     </div>
                   </div>
-                  
+
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">
                       {period.title}
@@ -223,13 +251,13 @@ export default function NadorPageClient() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Testez vos Connaissances</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Maintenant que vous avez découvert l'histoire de Nador, 
+              Maintenant que vous avez découvert l'histoire de Nador,
               évaluez vos connaissances avec notre quiz interactif de 10 questions.
             </p>
           </div>
 
-          <Quiz 
-            questions={data.quiz} 
+          <Quiz
+            questions={data.quiz}
             title="Quiz Histoire de Nador"
             onQuizComplete={handleQuizComplete}
           />
@@ -239,9 +267,9 @@ export default function NadorPageClient() {
       {/* Section Classement */}
       <section id="classement" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <QuizLeaderboard 
-            currentScore={currentScore || undefined} 
-            city="Nador" 
+          <QuizLeaderboard
+            currentScore={currentScore || undefined}
+            city="Nador"
           />
         </div>
       </section>
@@ -250,7 +278,7 @@ export default function NadorPageClient() {
       <section id="infos" className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl font-bold text-center mb-8">Informations Pratiques</h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gray-50 rounded-lg shadow-md p-6">
               <h3 className="text-xl font-bold mb-4">Comment s'y rendre</h3>

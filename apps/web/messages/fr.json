@@ -55,7 +55,10 @@
     "next": "Question suivante",
     "finish": "Terminer",
     "yourScore": "Votre score",
-    "outOf": "sur"
+    "outOf": "sur",
+    "name": "Nom du joueur",
+    "city": "Ville",
+    "score": "Score"
   },
   "footer": {
     "tagline": "Explorez le Maroc comme jamais auparavant",
@@ -77,4 +80,3 @@
     "rights": "Tous droits réservés."
   }
 }
-
