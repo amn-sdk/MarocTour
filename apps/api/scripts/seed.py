@@ -149,6 +149,75 @@ CITIES_DATA = [
     },
 ]
 
+# Quiz questions for Casablanca
+CASABLANCA_QUIZ_QUESTIONS = [
+    {
+        "question_fr": "Quel était le nom originel de Casablanca à l'époque berbère ?",
+        "question_en": "What was the original name of Casablanca in Berber times?",
+        "question_ar": "ما كان الاسم الأصلي للدار البيضاء في العصر الأمازيغي؟",
+        "options": {
+            "fr": ["Dar el-Beida", "Anfa", "Casa Blanca", "Al-Bayda"],
+            "en": ["Dar el-Beida", "Anfa", "Casa Blanca", "Al-Bayda"],
+            "ar": ["دار البيضاء", "أنفا", "كازا بلانكا", "البيضاء"],
+        },
+        "correct_index": 1,
+        "difficulty": "medium",
+        "order": 1,
+    },
+    {
+        "question_fr": "Quelle est la hauteur du minaret de la Mosquée Hassan II ?",
+        "question_en": "What is the height of the Hassan II Mosque minaret?",
+        "question_ar": "ما هو ارتفاع صومعة مسجد الحسن الثاني؟",
+        "options": {
+            "fr": ["150 mètres", "180 mètres", "210 mètres", "250 mètres"],
+            "en": ["150 meters", "180 meters", "210 meters", "250 meters"],
+            "ar": ["150 متراً", "180 متراً", "210 متراً", "250 متراً"],
+        },
+        "correct_index": 2,
+        "difficulty": "hard",
+        "order": 2,
+    },
+    {
+        "question_fr": "Quel sultan a reconstruit Casablanca en 1756 ?",
+        "question_en": "Which sultan rebuilt Casablanca in 1756?",
+        "question_ar": "أي سلطان أعاد بناء الدار البيضاء عام 1756؟",
+        "options": {
+            "fr": ["Moulay Ismail", "Mohammed ben Abdallah", "Hassan I", "Moulay Slimane"],
+            "en": ["Moulay Ismail", "Mohammed ben Abdallah", "Hassan I", "Moulay Slimane"],
+            "ar": ["مولاي إسماعيل", "محمد بن عبد الله", "الحسن الأول", "مولاي سليمان"],
+        },
+        "correct_index": 1,
+        "difficulty": "medium",
+        "order": 3,
+    },
+    {
+        "question_fr": "En quelle année le tramway de Casablanca a-t-il été inauguré ?",
+        "question_en": "In what year was the Casablanca tramway inaugurated?",
+        "question_ar": "في أي سنة تم تدشين ترامواي الدار البيضاء؟",
+        "options": {
+            "fr": ["2008", "2010", "2012", "2015"],
+            "en": ["2008", "2010", "2012", "2015"],
+            "ar": ["2008", "2010", "2012", "2015"],
+        },
+        "correct_index": 2,
+        "difficulty": "easy",
+        "order": 4,
+    },
+    {
+        "question_fr": "Casablanca est la capitale _____ du Maroc.",
+        "question_en": "Casablanca is the _____ capital of Morocco.",
+        "question_ar": "الدار البيضاء هي العاصمة _____ للمغرب.",
+        "options": {
+            "fr": ["politique", "économique", "culturelle", "administrative"],
+            "en": ["political", "economic", "cultural", "administrative"],
+            "ar": ["السياسية", "الاقتصادية", "الثقافية", "الإدارية"],
+        },
+        "correct_index": 1,
+        "difficulty": "easy",
+        "order": 5,
+    },
+]
+
 # Quiz questions for Nador
 NADOR_QUIZ_QUESTIONS = [
     {
@@ -253,6 +322,19 @@ def seed_database():
 
         session.commit()
 
+        # Seed quiz questions for Casablanca
+        casablanca = cities_map.get("casablanca")
+        total_questions = 0
+        if casablanca:
+            print(f"❓ Seeding {len(CASABLANCA_QUIZ_QUESTIONS)} quiz questions for Casablanca...")
+            for question_data in CASABLANCA_QUIZ_QUESTIONS:
+                question = QuizQuestion(city_id=casablanca.id, **question_data)
+                session.add(question)
+                print(f"  ✓ Added question: {question_data['question_fr'][:50]}...")
+                total_questions += 1
+
+            session.commit()
+
         # Seed quiz questions for Nador
         nador = cities_map.get("nador")
         if nador:
@@ -261,12 +343,13 @@ def seed_database():
                 question = QuizQuestion(city_id=nador.id, **question_data)
                 session.add(question)
                 print(f"  ✓ Added question: {question_data['question_fr'][:50]}...")
+                total_questions += 1
 
             session.commit()
 
         print("✅ Database seeding completed successfully!")
         print(f"   - {len(CITIES_DATA)} cities added")
-        print(f"   - {len(NADOR_QUIZ_QUESTIONS)} quiz questions added")
+        print(f"   - {total_questions} quiz questions added")
 
 
 if __name__ == "__main__":
