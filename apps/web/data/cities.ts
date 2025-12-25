@@ -156,5 +156,19 @@ export const cities: City[] = [
     image: '/images/cities/dakhla.jpg',
     highlights: ['Baie de Dakhla', 'Kitesurf', 'Dragon Island'],
   },
+  {
+    id: '11',
+    slug: 'kenitra',
+    name: 'Kénitra',
+    nameEn: 'Kenitra',
+    nameAr: 'القنيطرة',
+    region: 'Rabat-Salé-Kénitra',
+    latitude: 34.2610,
+    longitude: -6.5802,
+    population: 431000,
+    description: 'Ville portuaire sur l\'oued Sebou, pôle industriel et universitaire',
+    image: '/images/cities/kenitra.jpg',
+    highlights: ['Oued Sebou', 'Forêt de la Mamora', 'Plages de Mehdia'],
+  },
 ];
 
