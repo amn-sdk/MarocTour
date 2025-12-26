@@ -17,36 +17,47 @@ interface QuizScore {
 
 interface QuizLeaderboardProps {
   currentScore?: QuizScore;
-  city: string;
+  city: string; // Affichage lisible (ex: "Kénitra")
+  storageKey?: string; // Optionnel: clé dédiée (ex: "quiz-scores-kenitra")
 }
 
-export function QuizLeaderboard({ currentScore, city }: QuizLeaderboardProps) {
+function getStorageKey(city: string, storageKey?: string) {
+  if (storageKey) return storageKey;
+  const slug = city.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+  return `quiz-scores-${slug}`;
+}
+
+export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderboardProps) {
   const [scores, setScores] = useState<QuizScore[]>([]);
   const [playerName, setPlayerName] = useState('');
   const [showAddScore, setShowAddScore] = useState(false);
+  const key = getStorageKey(city, storageKey);
 
   useEffect(() => {
     loadScores();
-  }, [city]);
+  }, [city, key]);
 
   useEffect(() => {
     // Auto-save le score courant s'il a un nom
     if (currentScore && currentScore.playerName.trim()) {
-      const savedScores = localStorage.getItem('quiz-scores');
-      const allScores = savedScores ? JSON.parse(savedScores) : [];
+      // Back-compat: fusionner ancien stockage global s'il existe
+      const legacy = localStorage.getItem('quiz-scores');
+      const legacyScores = legacy ? JSON.parse(legacy) : [];
+      const savedScores = localStorage.getItem(key);
+      const allScores = savedScores ? JSON.parse(savedScores) : legacyScores;
       
       // Vérifier si ce score n'est pas déjà sauvegardé
       const exists = allScores.some((score: QuizScore) => score.id === currentScore.id);
       if (!exists) {
         allScores.push(currentScore);
-        localStorage.setItem('quiz-scores', JSON.stringify(allScores));
+        localStorage.setItem(key, JSON.stringify(allScores));
         loadScores();
       }
     }
-  }, [currentScore]);
+  }, [currentScore, key]);
 
   const loadScores = () => {
-    const savedScores = localStorage.getItem('quiz-scores');
+    const savedScores = localStorage.getItem(key);
     if (savedScores) {
       const allScores = JSON.parse(savedScores);
       const cityScores = allScores
@@ -72,11 +83,11 @@ export function QuizLeaderboard({ currentScore, city }: QuizLeaderboardProps) {
       completedAt: new Date().toISOString(),
     };
 
-    const savedScores = localStorage.getItem('quiz-scores');
+    const savedScores = localStorage.getItem(key);
     const allScores = savedScores ? JSON.parse(savedScores) : [];
     allScores.push(newScore);
     
-    localStorage.setItem('quiz-scores', JSON.stringify(allScores));
+    localStorage.setItem(key, JSON.stringify(allScores));
     loadScores();
     setShowAddScore(false);
     setPlayerName('');
