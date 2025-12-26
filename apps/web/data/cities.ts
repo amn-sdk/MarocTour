@@ -44,6 +44,7 @@ export const cities: City[] = [
     image: '/images/cities/casablanca.jpg',
     highlights: ['Mosquée Hassan II', 'Corniche', 'Quartier des Habous'],
   },
+
   {
     id: '3',
     slug: 'marrakech',
