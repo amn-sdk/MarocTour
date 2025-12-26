@@ -1,9 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Quiz } from '@/components/quiz/quiz';
+import { QuizLeaderboard } from '@/components/quiz/quiz-leaderboard';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MapPin, Clock, Users, Building2 } from 'lucide-react';
 import Link from 'next/link';
+
+interface QuizScore {
+    id: string;
+    playerName: string;
+    score: number;
+    totalQuestions: number;
+    percentage: number;
+    completedAt: string;
+    city: string;
+    timeSpent: number;
+}
 
 async function getCasablancaData() {
     try {
@@ -25,6 +38,7 @@ async function getCasablancaData() {
 export default function CasablancaClient() {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [currentScore, setCurrentScore] = useState<QuizScore | null>(null);
 
     useEffect(() => {
         getCasablancaData().then((result) => {
@@ -32,6 +46,50 @@ export default function CasablancaClient() {
             setLoading(false);
         });
     }, []);
+
+    const handleQuizComplete = async (score: number, totalQuestions: number, timeSpent: number, playerName: string) => {
+        const percentage = Math.round((score / totalQuestions) * 100);
+        const newScore: QuizScore = {
+            id: Date.now().toString(),
+            playerName: playerName,
+            score,
+            totalQuestions,
+            percentage,
+            completedAt: new Date().toISOString(),
+            city: 'Casablanca',
+            timeSpent
+        };
+
+        setCurrentScore(newScore);
+
+        // Submit to backend
+        try {
+            // 1. Get City ID
+            const cityRes = await fetch('http://localhost:8000/api/v1/cities/slug/casablanca');
+            if (!cityRes.ok) throw new Error('Failed to fetch city ID');
+            const cityData = await cityRes.json();
+
+            // 2. Submit Attempt
+            const attemptRes = await fetch('http://localhost:8000/api/v1/quiz/attempt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    city_id: cityData.id,
+                    player_name: playerName,
+                    answers: [],
+                    score: percentage
+                })
+            });
+
+            if (!attemptRes.ok) {
+                console.error('Failed to submit score to backend');
+            } else {
+                console.log('Score submitted successfully!');
+            }
+        } catch (error) {
+            console.error('Error submitting score:', error);
+        }
+    };
 
     if (loading) {
         return (
@@ -140,6 +198,9 @@ export default function CasablancaClient() {
                         <a href="#quiz" className="text-primary/80 hover:text-primary font-medium whitespace-nowrap transition-colors flex items-center gap-2">
                             🧠 Quiz
                         </a>
+                        <a href="#classement" className="text-primary/80 hover:text-primary font-medium whitespace-nowrap transition-colors flex items-center gap-2">
+                            🏆 Classement
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -159,7 +220,7 @@ export default function CasablancaClient() {
             {/* Section Histoire */}
             <section id="histoire" className="py-20 relative overflow-hidden">
                 {/* Background vintage pour l'ambiance */}
-                <div 
+                <div
                     className="absolute inset-0 opacity-5 z-0 pointer-events-none"
                     style={{
                         backgroundImage: 'url(/images/cities/casablanca/history_anfa.png)',
@@ -185,7 +246,7 @@ export default function CasablancaClient() {
                             <div key={period.id} className="relative pl-8 md:pl-0">
                                 {/* Ligne de temps verticale */}
                                 <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2" />
-                                
+
                                 <div className={`md:flex items-center justify-between gap-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                                     {/* Date / Période (côté opposé) */}
                                     <div className="hidden md:block w-5/12 text-right" />
@@ -211,6 +272,35 @@ export default function CasablancaClient() {
                             </div>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Section Quiz */}
+            <section id="quiz" className="py-20 bg-background">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-4xl font-bold mb-4">Testez vos Connaissances</h2>
+                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                            Maintenant que vous avez découvert l'histoire de Casablanca,
+                            évaluez vos connaissances avec notre quiz interactif de 10 questions.
+                        </p>
+                    </div>
+
+                    <Quiz
+                        questions={data.quiz}
+                        title="Quiz Histoire de Casablanca"
+                        onQuizComplete={handleQuizComplete}
+                    />
+                </div>
+            </section>
+
+            {/* Section Classement */}
+            <section id="classement" className="py-20 bg-muted/30">
+                <div className="container mx-auto px-4">
+                    <QuizLeaderboard
+                        currentScore={currentScore || undefined}
+                        city="Casablanca"
+                    />
                 </div>
             </section>
         </div>
