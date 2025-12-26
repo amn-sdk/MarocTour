@@ -135,7 +135,7 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
   // Écran d'accueil pour demander le nom
   if (!quizStarted) {
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg">
         <div className="text-center">
           <div className="mb-8">
             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -160,7 +160,7 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="Entrez votre nom..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-lg"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-lg bg-background text-foreground"
               maxLength={25}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && playerName.trim()) {
@@ -199,7 +199,7 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
     const percentage = Math.round((score / questions.length) * 100);
     
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg">
         <div className="text-center">
           <div className="mb-6">
             {percentage >= 80 ? (
@@ -231,13 +231,13 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
           
           <div className="mb-6">
             {percentage >= 80 && (
-              <p className="text-green-600 font-semibold">Excellent ! Vous maîtrisez parfaitement l'histoire de Nador.</p>
+              <p className="text-green-600 font-semibold">Excellent ! Vous maîtrisez parfaitement ce sujet.</p>
             )}
             {percentage >= 60 && percentage < 80 && (
-              <p className="text-yellow-600 font-semibold">Bien joué ! Vous avez de bonnes connaissances sur Nador.</p>
+              <p className="text-yellow-600 font-semibold">Bien joué ! Vous avez de bonnes connaissances.</p>
             )}
             {percentage < 60 && (
-              <p className="text-red-600 font-semibold">Il serait bon de relire l'histoire de Nador pour améliorer vos connaissances.</p>
+              <p className="text-red-600 font-semibold">Il serait bon de réviser pour améliorer vos connaissances.</p>
             )}
           </div>
           
@@ -250,7 +250,7 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg">
       {/* En-tête avec progression */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-4">
@@ -298,7 +298,7 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
               if (index === selectedAnswer) {
                 buttonClass += "border-blue-500 bg-blue-50 text-blue-800";
               } else {
-                buttonClass += "border-gray-200 hover:border-blue-300 hover:bg-blue-50";
+                buttonClass += "border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-foreground";
               }
             }
 
