@@ -52,6 +52,26 @@ test.describe('Carte - Marqueur Kénitra', () => {
     await page.goto('/city/kenitra');
     await expect(page.locator('h1')).toContainText('Kénitra');
   });
+
+  test('Contenu Présentation / Histoire / Culture présent', async ({ page }) => {
+    await page.goto('/city/kenitra');
+
+    // Présentation
+    await expect(page.locator('#presentation')).toBeVisible();
+    await expect(page.locator('text=Présentation')).toBeVisible();
+
+    // Histoire
+    await expect(page.locator('#histoire')).toBeVisible();
+    await expect(page.locator('text=Histoire de Kénitra')).toBeVisible();
+
+    // Culture
+    await expect(page.locator('#culture')).toBeVisible();
+    await expect(page.locator('text=Culture à Kénitra')).toBeVisible();
+
+    // Navigation interne (clic sur ancre)
+    await page.click('a[href="#histoire"]');
+    await expect(page.locator('#histoire')).toBeInViewport();
+  });
 });
 
 
