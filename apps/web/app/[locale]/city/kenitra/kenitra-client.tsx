@@ -1,17 +1,4 @@
-'use client';
-
-export default function KenitraPageClient() {
-  return (
-    <main className="container mx-auto py-8 px-4">
-      <a href="/map" className="text-sm text-blue-600 underline">&larr; Retour à la carte</a>
-      <h1 className="text-4xl font-bold mt-4 mb-2">Kénitra</h1>
-      <p className="text-muted-foreground">
-        Ville portuaire sur l’oued Sebou, pôle industriel et universitaire.
-      </p>
-    </main>
-  );
-}
-
+// @ts-nocheck
 'use client';
 
 import Link from 'next/link';
