@@ -17,7 +17,7 @@ export default function HomePage({
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 z-0"
           style={{
             backgroundImage: 'url(/images/marocpageaccueil.png)',
@@ -89,7 +89,7 @@ export default function HomePage({
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
             {t('topScores.title')}
           </h2>
-          <TopScores limit={5} />
+          <TopScores limit={10} />
           <div className="text-center mt-8">
             <Button asChild variant="outline">
               <Link href="/quiz">
