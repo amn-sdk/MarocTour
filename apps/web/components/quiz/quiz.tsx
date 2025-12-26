@@ -231,13 +231,13 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
           
           <div className="mb-6">
             {percentage >= 80 && (
-              <p className="text-green-600 font-semibold">Excellent ! Vous maîtrisez parfaitement l'histoire de Nador.</p>
+              <p className="text-green-600 font-semibold">Excellent ! Vous maîtrisez parfaitement ce sujet.</p>
             )}
             {percentage >= 60 && percentage < 80 && (
-              <p className="text-yellow-600 font-semibold">Bien joué ! Vous avez de bonnes connaissances sur Nador.</p>
+              <p className="text-yellow-600 font-semibold">Bien joué ! Vous avez de bonnes connaissances.</p>
             )}
             {percentage < 60 && (
-              <p className="text-red-600 font-semibold">Il serait bon de relire l'histoire de Nador pour améliorer vos connaissances.</p>
+              <p className="text-red-600 font-semibold">Il serait bon de réviser pour améliorer vos connaissances.</p>
             )}
           </div>
           
