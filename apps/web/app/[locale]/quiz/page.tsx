@@ -25,6 +25,14 @@ export default function QuizPage({
             image: '/images/cities/nador/nador.jpg',
             link: '/city/nador',
             difficult: 'Moyen'
+        },
+        {
+            id: 'kenitra',
+            title: 'Kénitra',
+            description: 'Ville dynamique du Gharb, entre Sebou et océan.',
+            image: '/images/cities/kenitra.jpg',
+            link: '/city/kenitra',
+            difficult: 'Facile'
         }
         // Future quizzes will go here
     ];
