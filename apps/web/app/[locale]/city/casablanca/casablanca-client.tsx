@@ -155,6 +155,64 @@ export default function CasablancaClient() {
                     </p>
                 </div>
             </section>
+
+            {/* Section Histoire */}
+            <section id="histoire" className="py-20 relative overflow-hidden">
+                {/* Background vintage pour l'ambiance */}
+                <div 
+                    className="absolute inset-0 opacity-5 z-0 pointer-events-none"
+                    style={{
+                        backgroundImage: 'url(/images/cities/casablanca/history_anfa.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                />
+
+                <div className="container mx-auto px-4 max-w-5xl relative z-10">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl font-black mb-4">Une Histoire Millénaire</h2>
+                        <p className="text-xl text-muted-foreground">
+                            De l'antique Anfa à la métropole mondiale
+                        </p>
+                        <div className="flex items-center justify-center gap-2 mt-4 text-sm font-medium text-primary">
+                            <Clock className="h-4 w-4" />
+                            <span>Voyage à travers le temps</span>
+                        </div>
+                    </div>
+
+                    <div className="space-y-12">
+                        {data.history.map((period: any, index: number) => (
+                            <div key={period.id} className="relative pl-8 md:pl-0">
+                                {/* Ligne de temps verticale */}
+                                <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2" />
+                                
+                                <div className={`md:flex items-center justify-between gap-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                                    {/* Date / Période (côté opposé) */}
+                                    <div className="hidden md:block w-5/12 text-right" />
+
+                                    {/* Marqueur central */}
+                                    <div className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-background border-4 border-primary z-10 -translate-x-1/2 flex items-center justify-center shadow-lg">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                                    </div>
+
+                                    {/* Contenu */}
+                                    <div className="w-full md:w-5/12 bg-card rounded-xl border shadow-sm p-6 hover:shadow-md transition-shadow">
+                                        <h3 className="text-xl font-bold mb-3 flex items-center gap-3">
+                                            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary text-sm font-bold">
+                                                {index + 1}
+                                            </span>
+                                            {period.title}
+                                        </h3>
+                                        <p className="text-muted-foreground leading-relaxed text-sm">
+                                            {period.text}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }
