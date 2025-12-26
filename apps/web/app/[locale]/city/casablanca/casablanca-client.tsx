@@ -198,6 +198,9 @@ export default function CasablancaClient() {
                         <a href="#quiz" className="text-primary/80 hover:text-primary font-medium whitespace-nowrap transition-colors flex items-center gap-2">
                             🧠 Quiz
                         </a>
+                        <a href="#classement" className="text-primary/80 hover:text-primary font-medium whitespace-nowrap transition-colors flex items-center gap-2">
+                            🏆 Classement
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -269,6 +272,35 @@ export default function CasablancaClient() {
                             </div>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Section Quiz */}
+            <section id="quiz" className="py-20 bg-background">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-4xl font-bold mb-4">Testez vos Connaissances</h2>
+                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                            Maintenant que vous avez découvert l'histoire de Casablanca,
+                            évaluez vos connaissances avec notre quiz interactif de 10 questions.
+                        </p>
+                    </div>
+
+                    <Quiz
+                        questions={data.quiz}
+                        title="Quiz Histoire de Casablanca"
+                        onQuizComplete={handleQuizComplete}
+                    />
+                </div>
+            </section>
+
+            {/* Section Classement */}
+            <section id="classement" className="py-20 bg-muted/30">
+                <div className="container mx-auto px-4">
+                    <QuizLeaderboard
+                        currentScore={currentScore || undefined}
+                        city="Casablanca"
+                    />
                 </div>
             </section>
         </div>
