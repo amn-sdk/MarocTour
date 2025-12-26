@@ -2,76 +2,229 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, PlayCircle, Map, HelpCircle } from 'lucide-react';
+import { Quiz } from '@/components/quiz/quiz';
+import { kenitraQuestions } from '@/data/quizzes/kenitra';
+import { QuizLeaderboard } from '@/components/quiz/quiz-leaderboard';
 
 export default function KenitraPageClient() {
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [currentScore, setCurrentScore] = useState<any>(undefined);
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b text-gray-900">
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="bg-card border-b">
         <div className="container mx-auto px-4 py-6 flex items-center justify-between">
           <h1 className="text-3xl font-bold">Kénitra</h1>
-          <Link href="/map">
-            <Button variant="outline">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Retour à la carte
-            </Button>
-          </Link>
+          <div className="flex gap-2">
+            <Link href="/map">
+              <Button variant="outline">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Retour à la carte
+              </Button>
+            </Link>
+            <Link href="#quiz">
+              <Button>
+                <PlayCircle className="h-4 w-4 mr-2" />
+                Participer au quiz
+              </Button>
+            </Link>
+          </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-10 max-w-3xl text-gray-900">
-        <nav aria-label="Navigation interne" className="mb-8 flex gap-4 text-sm text-muted-foreground">
-          <a href="#presentation" className="hover:underline">Présentation</a>
-          <a href="#histoire" className="hover:underline">Histoire</a>
-          <a href="#culture" className="hover:underline">Culture</a>
-        </nav>
-
-        <section id="presentation" aria-labelledby="presentation-title" className="mb-8">
-          <h2 id="presentation-title" className="text-2xl font-semibold mb-3">Présentation</h2>
-          <p className="text-base leading-7 text-muted-foreground">
-            Située sur l’oued Sebou et à proximité de l’océan Atlantique, Kénitra est une ville dynamique
-            de la région Rabat‑Salé‑Kénitra. Son développement récent s’appuie sur un tissu industriel
-            en expansion, une position stratégique sur l’axe ferroviaire et autoroutier nord‑sud, et la
-            station balnéaire voisine de Mehdia. La ville bénéficie d’une population jeune et d’un pôle
-            universitaire en croissance, tout en restant connectée à des espaces naturels remarquables
-            comme la forêt de la Mamora et l’embouchure du Sebou. Caractérisée par une qualité de vie
-            accessible, des mobilités efficaces et un écosystème économique diversifié, Kénitra se
-            positionne comme une porte d’entrée vers les plaines du Gharb et un lieu de séjour propice
-            aux activités de plein air, à la découverte culturelle et aux échanges entre les métropoles
-            du littoral atlantique.
+      {/* Hero visuel */}
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute top-0 left-0 w-1/2 h-full"
+            style={{
+              backgroundImage: 'url(/images/cities/kenitra/hero.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+          <div
+            className="absolute top-0 right-0 w-1/2 h-full"
+            style={{
+              backgroundImage: 'url(/images/cities/kenitra/mehdi_couche_soleil.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
+        </div>
+        <div className="relative z-10 text-center text-white px-6">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow">Kénitra, entre Sebou et Atlantique</h2>
+          <p className="max-w-3xl mx-auto text-base md:text-lg opacity-95">
+            Ville jeune et dynamique, carrefour ferroviaire et autoroutier, Kénitra s’ouvre sur les espaces
+            naturels de la Mamora et l’embouchure du Sebou, avec Mehdia toute proche.
           </p>
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <Link href="/map">
+              <Button variant="secondary" className="gap-2">
+                <Map className="h-4 w-4" />
+                Explorer la carte
+              </Button>
+            </Link>
+            <Link href="#quiz">
+              <Button className="gap-2">
+                <HelpCircle className="h-4 w-4" />
+                Lancer le quiz
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <main className="container mx-auto px-4 py-12 max-w-6xl">
+        {/* Sections illustrées */}
+        <section id="presentation" className="mb-12">
+          <h3 className="text-2xl font-semibold mb-4">Présentation</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="col-span-2 rounded-lg overflow-hidden border bg-card">
+              <div
+                className="h-56 w-full"
+                style={{
+                  backgroundImage: 'url(/images/cities/kenitra.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+              <div className="p-5 text-muted-foreground">
+                Située sur l’oued Sebou et à proximité de l’Atlantique, Kénitra s’appuie sur un tissu
+                industriel en croissance, des mobilités efficaces et des espaces naturels remarquables.
+              </div>
+            </div>
+            <div className="rounded-lg overflow-hidden border bg-card">
+              <div
+                className="h-56 w-full"
+                style={{
+                  backgroundImage: 'url(/images/cities/kenitra/kenitra_gare.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+              <div className="p-5 text-muted-foreground">
+                Une position stratégique sur l’axe ferroviaire et autoroutier nord‑sud.
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section id="histoire" aria-labelledby="histoire-title" className="mb-12">
-          <h2 id="histoire-title" className="text-2xl font-semibold mb-3">Histoire de Kénitra</h2>
-          <p className="text-base leading-7 text-muted-foreground mb-3">
-            L’essor moderne de Kénitra s’est structuré au XXe siècle autour des axes de transport,
-            de l’activité portuaire et du développement agricole du Gharb. La ville a progressivement
-            diversifié ses fonctions vers l’industrie et l’enseignement supérieur, tout en gardant
-            un lien étroit avec son fleuve et l’océan. Aujourd’hui, Kénitra s’affirme comme un pôle
-            régional connecté, où cohabitent espaces naturels et dynamique urbaine.
-          </p>
-          <ul className="list-disc pl-6 text-base leading-7 text-muted-foreground">
-            <li>Structuration urbaine au XXe siècle</li>
-            <li>Rôle du fleuve Sebou et des infrastructures (rail/autoroute)</li>
-            <li>Ouverture vers l’Atlantique et la station de Mehdia</li>
-          </ul>
+        <section id="histoire" className="mb-12">
+          <h3 className="text-2xl font-semibold mb-4">Histoire</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="rounded-lg overflow-hidden border bg-card">
+              <div
+                className="h-40 w-full"
+                style={{
+                  backgroundImage: 'url(/images/cities/kenitra/mehdi_couche_soleil.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+              <div className="p-5 text-muted-foreground">
+                Structuration au XXe siècle autour du transport, du port et de l’agriculture du Gharb.
+              </div>
+            </div>
+            <div className="rounded-lg overflow-hidden border bg-card">
+              <div
+                className="h-40 w-full"
+                style={{
+                  backgroundImage: 'url(/images/cities/kenitra/hero.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+              <div className="p-5 text-muted-foreground">
+                Diversification vers l’industrie et l’enseignement supérieur.
+              </div>
+            </div>
+            <div className="rounded-lg overflow-hidden border bg-card">
+              <div className="p-5 text-muted-foreground">
+                La ville affirme aujourd’hui un rôle régional, connectant espaces naturels et dynamique urbaine.
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section id="culture" aria-labelledby="culture-title" className="mb-12">
-          <h2 id="culture-title" className="text-2xl font-semibold mb-3">Culture à Kénitra</h2>
-          <p className="text-base leading-7 text-muted-foreground mb-3">
-            Portée par une population jeune et un réseau associatif actif, la vie culturelle met en
-            valeur les pratiques sportives, les événements locaux et les initiatives étudiantes. La
-            proximité de la Mamora et du littoral favorise les activités de plein air, tandis que
-            l’ancrage académique et la connexion aux grandes villes enrichissent l’offre culturelle.
-          </p>
-          <ul className="list-disc pl-6 text-base leading-7 text-muted-foreground">
-            <li>Vie associative et initiatives étudiantes</li>
-            <li>Plages de Mehdia et forêts de la Mamora</li>
-            <li>Événements locaux et pratiques sportives</li>
-          </ul>
+        <section id="culture" className="mb-12">
+          <h3 className="text-2xl font-semibold mb-4">Culture & Nature</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="rounded-lg overflow-hidden border bg-card">
+              <div className="p-5 text-muted-foreground">
+                Vie associative, initiatives étudiantes et événements locaux rythment la vie culturelle.
+              </div>
+            </div>
+            <div className="rounded-lg overflow-hidden border bg-card">
+              <div
+                className="h-40 w-full"
+                style={{
+                  backgroundImage: 'url(/images/cities/kenitra/kenitra_gare.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+              <div className="p-5 text-muted-foreground">
+                Mehdia et la Mamora favorisent les activités de plein air et la détente.
+              </div>
+            </div>
+            <div className="rounded-lg overflow-hidden border bg-card">
+              <div
+                className="h-40 w-full"
+                style={{
+                  backgroundImage: 'url(/images/cities/kenitra.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+              <div className="p-5 text-muted-foreground">
+                Un cadre accessible et une qualité de vie attractive pour les familles et les étudiants.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz embarqué */}
+        <section id="quiz" className="mb-16">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-2xl font-semibold">Quiz Kénitra</h3>
+            <div className="flex gap-2">
+              <Link href="/quiz/kenitra">
+                <Button variant="outline">Ouvrir en page dédiée</Button>
+              </Link>
+              <Button onClick={() => setShowQuiz((v) => !v)}>
+                {showQuiz ? 'Masquer' : 'Jouer ici'}
+              </Button>
+            </div>
+          </div>
+          {showQuiz && (
+            <div className="max-w-3xl">
+              <Quiz
+                questions={kenitraQuestions}
+                title="Quiz Kénitra"
+                onQuizComplete={(score, total, time, player) => {
+                  const percentage = Math.round((score / total) * 100);
+                  setCurrentScore({
+                    id: `${Date.now()}`,
+                    playerName: player,
+                    score,
+                    totalQuestions: total,
+                    percentage,
+                    completedAt: new Date().toISOString(),
+                    city: 'Kénitra',
+                    timeSpent: time,
+                  });
+                }}
+              />
+              <QuizLeaderboard currentScore={currentScore} city="Kénitra" storageKey="quiz-scores-kenitra" />
+            </div>
+          )}
         </section>
       </main>
     </div>
