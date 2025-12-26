@@ -1,30 +1,19 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { cities } from '@/data/cities';
+import { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
+import CasablancaClient from './casablanca-client';
 
 export const metadata: Metadata = {
-    title: 'Casablanca - MarocTour',
-    description: 'Découvrez Casablanca, la capitale économique du Maroc',
+    title: 'Casablanca - Histoire et Modernité | MarocTour',
+    description: 'Explorez Casablanca, métropole cosmopolite fusionnant architecture Art Déco et patrimoine millénaire. Découvrez son histoire et testez vos connaissances sur la ville blanche.',
+    keywords: 'Casablanca, Casablanca-Settat, Maroc, Histoire, Art Déco, Mosquée Hassan II, Tourisme, Économie',
 };
 
-export default function CasablancaPage() {
-    const city = cities.find((c) => c.slug === 'casablanca');
+export default function CasablancaPage({
+    params: { locale },
+}: {
+    params: { locale: string };
+}) {
+    setRequestLocale(locale);
 
-    if (!city) {
-        notFound();
-    }
-
-    return (
-        <div className="flex flex-col min-h-screen pt-20">
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="text-4xl font-bold mb-6 text-primary">{city.name}</h1>
-                <p className="text-xl text-muted-foreground mb-8">
-                    {city.description}
-                </p>
-                <div className="p-4 bg-muted rounded-lg">
-                    <p>Page en construction...</p>
-                </div>
-            </div>
-        </div>
-    );
+    return <CasablancaClient />;
 }
