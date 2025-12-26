@@ -51,7 +51,7 @@ export default function KenitraQuizClient() {
 
       <Quiz questions={kenitraQuestions} title={title} onQuizComplete={handleComplete} />
 
-      <QuizLeaderboard currentScore={currentScore} city="Kénitra" />
+      <QuizLeaderboard currentScore={currentScore} city="Kénitra" storageKey="quiz-scores-kenitra" />
     </div>
   );
 }
