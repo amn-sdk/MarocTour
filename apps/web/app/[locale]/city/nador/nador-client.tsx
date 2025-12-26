@@ -207,8 +207,18 @@ export default function NadorPageClient() {
       </nav>
 
       {/* Section Histoire */}
-      <section id="histoire" className="py-16">
-        <div className="container mx-auto px-4 max-w-4xl">
+      <section id="histoire" className="py-16 relative overflow-hidden">
+        {/* Background vintage pour l'ambiance */}
+        <div
+          className="absolute inset-0 opacity-5 z-0 pointer-events-none"
+          style={{
+            backgroundImage: 'url(/images/cities/nador/history_ancient.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+
+        <div className="container mx-auto px-4 max-w-4xl relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Histoire de Nador</h2>
             <p className="text-xl text-gray-600">
