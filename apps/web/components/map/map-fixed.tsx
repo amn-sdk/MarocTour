@@ -114,8 +114,13 @@ export function MapFixed({
 
             // Navigation au clic sur le marqueur ou bouton
             const handleNavigation = () => {
-              console.log(`🚀 Navigation vers /city/${city.slug}`);
-              window.open(`/city/${city.slug}`, '_blank');
+              // Récupérer la locale depuis l'URL actuelle
+              const currentPath = window.location.pathname;
+              const localeMatch = currentPath.match(/^\/(fr|en|ar)/);
+              const locale = localeMatch ? localeMatch[1] : 'fr';
+              const cityUrl = `/${locale}/city/${city.slug}`;
+              console.log(`🚀 Navigation vers ${cityUrl}`);
+              window.location.href = cityUrl;
             };
 
             // Clic sur le marqueur
