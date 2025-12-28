@@ -2,35 +2,46 @@
 
 Ce dossier contient les images utilisées sur la page de présentation de Fès.
 
-## Images requises
+## Images requises (actuellement utilisées)
 
-Placez les images suivantes dans ce dossier :
+Placez les images suivantes dans ce dossier pour que la page fonctionne correctement :
 
-### Images principales
-- `hero.jpg` - Image principale de Fès (vue panoramique de la ville)
-- `medina.jpg` - Vue de la médina de Fès el-Bali
-- `tanneries.jpg` - Les tanneries traditionnelles de Fès
+### Images Hero (Section principale)
+- `medina.png` - Vue de la médina de Fès el-Bali (image de gauche dans le hero)
+- `tanneries.png` - Les tanneries traditionnelles de Fès (image de droite dans le hero)
+  - Ces images sont utilisées en split-screen dans la section hero
+  - Format recommandé: PNG, JPG ou WebP
+  - Résolution: Minimum 1920x1080 (format paysage)
 
 ### Images historiques
-- `history_foundation.jpg` - Illustration de la fondation de Fès (789)
-- `history_merinides.jpg` - Période mérinide (XIIIe-XVe siècle)
-- `history_modern.jpg` - Fès moderne et patrimoine UNESCO
+- `history_foundation.png` - Image de fond pour la section histoire (utilisée en overlay subtil)
+  - Format recommandé: PNG, JPG ou WebP
+  - Résolution: Minimum 1920x1080
+  - Note: Cette image est utilisée avec une opacité très faible (5%) comme texture de fond
+
+## Images optionnelles (pour enrichir la page)
+
+Ces images peuvent être ajoutées pour améliorer l'expérience visuelle :
+
+### Images historiques supplémentaires
+- `history_merinides.png` - Période mérinide (XIIIe-XVe siècle)
+- `history_modern.png` - Fès moderne et patrimoine UNESCO
+- `history_university.png` - Université Al Quaraouiyine
 
 ### Images culturelles
-- `culture_artisanat.jpg` - Artisanat traditionnel de Fès
-- `culture_festival.jpg` - Festivals et vie culturelle
-
-### Points d'intérêt
-- `university.jpg` - Université Al Quaraouiyine
+- `culture_artisanat.png` - Artisanat traditionnel de Fès
+- `culture_festival.png` - Festivals et vie culturelle
 
 ## Format recommandé
-- Format: JPG ou WebP
+- Format: PNG, JPG ou WebP (PNG recommandé pour la transparence si nécessaire)
 - Résolution: Minimum 1920x1080 pour les images hero
 - Résolution: Minimum 800x600 pour les autres images
-- Optimisation: Compresser les images pour le web
+- Optimisation: Compresser les images pour le web (utiliser WebP pour de meilleures performances)
 
-## Note
-Les images sont référencées dans `fes-client.tsx`. Si une image n'est pas disponible,
-elle affichera un fond par défaut. Vous pouvez utiliser des images de stock ou des photos
-personnelles de Fès.
+## Note importante
+Les images `medina.png` et `tanneries.png` sont **requises** pour que la section hero s'affiche correctement.
+Si ces images ne sont pas disponibles, la page affichera un fond par défaut (gradient).
+
+Vous pouvez utiliser des images de stock ou des photos personnelles de Fès. Assurez-vous que les images
+sont de bonne qualité et représentent bien les aspects de la ville mentionnés.
 
