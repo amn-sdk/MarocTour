@@ -33,6 +33,22 @@ export default function QuizPage({
             image: '/images/cities/kenitra.jpg',
             link: '/quiz/kenitra',
             difficult: 'Facile'
+        },
+        {
+            id: 'fes',
+            title: 'Fès',
+            description: 'Capitale spirituelle et culturelle, berceau millénaire de l\'érudition islamique.',
+            image: '/images/cities/fes.jpg',
+            link: '/city/fes',
+            difficult: 'Moyen'
+        },
+        {
+            id: 'casablanca',
+            title: 'Casablanca',
+            description: 'La ville blanche, poumon économique du Royaume.',
+            image: '/images/cities/casablanca/hero.png',
+            link: '/city/casablanca',
+            difficult: 'Facile'
         }
         // Future quizzes will go here
     ];
