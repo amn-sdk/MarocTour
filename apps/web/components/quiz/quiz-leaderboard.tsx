@@ -31,11 +31,34 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
   const [scores, setScores] = useState<QuizScore[]>([]);
   const [playerName, setPlayerName] = useState('');
   const [showAddScore, setShowAddScore] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [cityId, setCityId] = useState<string | null>(null);
   const key = getStorageKey(city, storageKey);
 
+  // Get city ID from backend
   useEffect(() => {
-    loadScores();
-  }, [city, key]);
+    const fetchCityId = async () => {
+      try {
+        const citySlug = city.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+        const response = await fetch(`http://localhost:8000/api/v1/cities/slug/${citySlug}`);
+        if (response.ok) {
+          const cityData = await response.json();
+          setCityId(cityData.id);
+        }
+      } catch (error) {
+        console.error('Failed to fetch city ID:', error);
+      }
+    };
+    fetchCityId();
+  }, [city]);
+
+  useEffect(() => {
+    if (cityId) {
+      loadScoresFromBackend();
+    } else {
+      loadScoresFromLocalStorage();
+    }
+  }, [city, key, cityId]);
 
   useEffect(() => {
     // Auto-save le score courant s'il a un nom
@@ -51,12 +74,65 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
       if (!exists) {
         allScores.push(currentScore);
         localStorage.setItem(key, JSON.stringify(allScores));
-        loadScores();
+        // Reload scores after saving
+        if (cityId) {
+          loadScoresFromBackend();
+        } else {
+          loadScoresFromLocalStorage();
+        }
       }
     }
-  }, [currentScore, key]);
+  }, [currentScore, key, cityId]);
 
-  const loadScores = () => {
+  const loadScoresFromBackend = async () => {
+    if (!cityId) return;
+    
+    setLoading(true);
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/quiz/top-scores?limit=10&city_id=${cityId}`);
+      if (response.ok) {
+        const backendScores = await response.json();
+        const formattedScores: QuizScore[] = backendScores.map((s: any, index: number) => ({
+          id: s.id || `backend-${s.player_name}-${s.completed_at}-${index}`,
+          playerName: s.player_name,
+          score: s.score, // Backend stores percentage as score
+          totalQuestions: 10, // Default, could be enhanced
+          percentage: s.score, // Backend score is already a percentage
+          completedAt: s.completed_at,
+          city: s.city_name || city,
+          timeSpent: 0, // Backend doesn't store time yet
+        }));
+        
+        // Merge with localStorage scores for time data
+        const savedScores = localStorage.getItem(key);
+        if (savedScores) {
+          const localScores: QuizScore[] = JSON.parse(savedScores);
+          const mergedScores = formattedScores.map(backendScore => {
+            const localMatch = localScores.find(
+              (ls: QuizScore) => ls.playerName === backendScore.playerName && 
+              Math.abs(new Date(ls.completedAt).getTime() - new Date(backendScore.completedAt).getTime()) < 60000
+            );
+            return localMatch ? { ...backendScore, timeSpent: localMatch.timeSpent } : backendScore;
+          });
+          setScores(mergedScores);
+        } else {
+          setScores(formattedScores);
+        }
+      } else {
+        // Fallback to localStorage if backend fails
+        loadScoresFromLocalStorage();
+      }
+    } catch (error) {
+      console.error('Failed to load scores from backend:', error);
+      // Fallback to localStorage
+      loadScoresFromLocalStorage();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadScoresFromLocalStorage = () => {
+    setLoading(true);
     const savedScores = localStorage.getItem(key);
     if (savedScores) {
       const allScores = JSON.parse(savedScores);
@@ -71,6 +147,7 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
         });
       setScores(cityScores.slice(0, 10)); // Top 10
     }
+    setLoading(false);
   };
 
   const saveScore = () => {
@@ -88,7 +165,11 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
     allScores.push(newScore);
     
     localStorage.setItem(key, JSON.stringify(allScores));
-    loadScores();
+    if (cityId) {
+      loadScoresFromBackend();
+    } else {
+      loadScoresFromLocalStorage();
+    }
     setShowAddScore(false);
     setPlayerName('');
   };
@@ -165,8 +246,16 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
         </div>
       )}
 
+      {/* Loading state */}
+      {loading && (
+        <div className="text-center py-8 text-gray-500">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4" />
+          <p>Chargement du classement...</p>
+        </div>
+      )}
+
       {/* Tableau des scores */}
-      {scores.length > 0 ? (
+      {!loading && scores.length > 0 ? (
         <div className="space-y-3">
           {scores.map((score, index) => (
             <div
@@ -210,13 +299,13 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
             </div>
           ))}
         </div>
-      ) : (
+      ) : !loading ? (
         <div className="text-center py-8 text-gray-500">
           <Trophy className="h-12 w-12 mx-auto mb-4 text-gray-300" />
           <p>Aucun score enregistré pour le moment.</p>
           <p className="text-sm">Soyez le premier à apparaître dans le classement !</p>
         </div>
-      )}
+      ) : null}
 
       {/* Statistiques globales */}
       {scores.length > 0 && (

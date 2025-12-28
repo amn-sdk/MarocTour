@@ -310,6 +310,7 @@ export default function FesPageClient() {
                     <QuizLeaderboard
                         currentScore={currentScore || undefined}
                         city="Fès"
+                        storageKey="quiz-scores-fes"
                     />
                 </div>
             </section>
