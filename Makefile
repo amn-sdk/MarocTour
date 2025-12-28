@@ -25,7 +25,7 @@ dev-web: ## Lance le frontend Next.js
 	cd apps/web && pnpm dev
 
 dev-api: ## Lance le backend FastAPI
-	cd apps/api && uvicorn app.main:app --reload --port 8000
+	cd apps/api && source venv/bin/activate && uvicorn app.main:app --reload --port 8000
 
 build: ## Build les images Docker
 	@echo "$(CYAN)Build des images Docker...$(NC)"
