@@ -12,7 +12,9 @@
     "test:watch": "jest --watch",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "images:optimize:kenitra": "node ./scripts/optimize-images.mjs kenitra"
+    "images:optimize:kenitra": "node ./scripts/optimize-images.mjs kenitra",
+    "images:optimize:fes": "node ./scripts/optimize-images.mjs fes",
+    "images:optimize:all": "node ./scripts/optimize-all-cities.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
