@@ -16,6 +16,11 @@ export default function MapPage({
   setRequestLocale(locale);
   const t = useTranslations('map');
 
+  // Filter cities to only show those with dedicated pages
+  const activeCities = cities.filter(city =>
+    ['fes', 'nador', 'meknes', 'casablanca', 'kenitra'].includes(city.slug)
+  );
+
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="mb-8">
@@ -24,16 +29,16 @@ export default function MapPage({
           {t('description')}
         </p>
       </div>
-      
+
       <div className="rounded-lg overflow-hidden border shadow-lg">
-        <MapFixed cities={cities} />
+        <MapFixed cities={activeCities} />
       </div>
 
       {/* Cities List (Alternative for accessibility) */}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-6">{t('citiesList')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {cities.map((city) => (
+          {activeCities.map((city) => (
             <a
               key={city.id}
               href={`/city/${city.slug}`}
