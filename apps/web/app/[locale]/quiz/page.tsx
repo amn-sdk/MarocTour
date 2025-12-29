@@ -49,6 +49,14 @@ export default function QuizPage({
             image: '/images/cities/casablanca/hero.png',
             link: '/city/casablanca',
             difficult: 'Facile'
+        },
+        {
+            id: 'meknes',
+            title: 'Meknès',
+            description: 'Le Versailles Marocain, cité impériale de Moulay Ismail.',
+            image: '/images/cities/meknes/bab_mansour.png',
+            link: '/city/meknes',
+            difficult: 'Moyen'
         }
         // Future quizzes will go here
     ];
