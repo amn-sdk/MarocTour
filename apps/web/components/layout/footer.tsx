@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { MapPin, Mail, Phone, Github } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 export function Footer() {
   const t = useTranslations('footer');
@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="border-t bg-muted/50">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center space-x-2 mb-4">
@@ -64,39 +64,12 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h3 className="font-semibold mb-4">{t('contact.title')}</h3>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2 text-muted-foreground">
-                <Mail className="h-4 w-4" />
-                contact@maroctour.ma
-              </li>
-              <li className="flex items-center gap-2 text-muted-foreground">
-                <Phone className="h-4 w-4" />
-                +212 5XX XX XX XX
-              </li>
-              <li>
-                <a
-                  href="https://github.com/votre-org/MarocTour"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Github className="h-4 w-4" />
-                  GitHub
-                </a>
-              </li>
-            </ul>
+          <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
+            <p>
+              © {new Date().getFullYear()} MarocTour. {t('rights')}
+            </p>
           </div>
         </div>
-
-        <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>
-            © {new Date().getFullYear()} MarocTour. {t('rights')}
-          </p>
-        </div>
-      </div>
     </footer>
   );
 }
