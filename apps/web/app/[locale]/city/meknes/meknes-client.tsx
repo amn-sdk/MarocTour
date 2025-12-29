@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Quiz } from '@/components/quiz/quiz';
+import { QuizLeaderboard } from '@/components/quiz/quiz-leaderboard';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MapPin, Users, Building2, Crown, Landmark, Palmtree } from 'lucide-react';
 import Link from 'next/link';
@@ -378,6 +379,16 @@ export default function MeknesClient() {
                     </div>
                 </section>
             )}
+
+            {/* Leaderboard Section */}
+            <section id="classement" className="py-20 bg-muted/30">
+                <div className="container mx-auto px-4">
+                    <QuizLeaderboard
+                        currentScore={currentScore || undefined}
+                        city="Meknès"
+                    />
+                </div>
+            </section>
         </div>
     );
 }
