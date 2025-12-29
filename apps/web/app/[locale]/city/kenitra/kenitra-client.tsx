@@ -10,7 +10,7 @@ import { kenitraQuestions } from '@/data/quizzes/kenitra';
 import { QuizLeaderboard } from '@/components/quiz/quiz-leaderboard';
 
 export default function KenitraPageClient() {
-  const [showQuiz, setShowQuiz] = useState(false);
+
   const [currentScore, setCurrentScore] = useState<any>(undefined);
 
   return (
@@ -194,37 +194,29 @@ export default function KenitraPageClient() {
         <section id="quiz" className="mb-16">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-semibold">Quiz Kénitra</h3>
-            <div className="flex gap-2">
-              <Link href="/quiz/kenitra">
-                <Button variant="outline">Ouvrir en page dédiée</Button>
-              </Link>
-              <Button onClick={() => setShowQuiz((v) => !v)}>
-                {showQuiz ? 'Masquer' : 'Jouer ici'}
-              </Button>
-            </div>
           </div>
-          {showQuiz && (
-            <div className="max-w-3xl">
-              <Quiz
-                questions={kenitraQuestions}
-                title="Quiz Kénitra"
-                onQuizComplete={(score, total, time, player) => {
-                  const percentage = Math.round((score / total) * 100);
-                  setCurrentScore({
-                    id: `${Date.now()}`,
-                    playerName: player,
-                    score,
-                    totalQuestions: total,
-                    percentage,
-                    completedAt: new Date().toISOString(),
-                    city: 'Kénitra',
-                    timeSpent: time,
-                  });
-                }}
-              />
+          <div className="max-w-3xl mx-auto">
+            <Quiz
+              questions={kenitraQuestions}
+              title="Quiz Kénitra"
+              onQuizComplete={(score, total, time, player) => {
+                const percentage = Math.round((score / total) * 100);
+                setCurrentScore({
+                  id: `${Date.now()}`,
+                  playerName: player,
+                  score,
+                  totalQuestions: total,
+                  percentage,
+                  completedAt: new Date().toISOString(),
+                  city: 'Kénitra',
+                  timeSpent: time,
+                });
+              }}
+            />
+            <div className="mt-12">
               <QuizLeaderboard currentScore={currentScore} city="Kénitra" storageKey="quiz-scores-kenitra" />
             </div>
-          )}
+          </div>
         </section>
       </main>
     </div>
