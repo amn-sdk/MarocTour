@@ -84,7 +84,7 @@ test.describe('Page Fès - Navigation et Quiz', () => {
 
     // Naviguer vers la section présentation
     await page.locator('a[href="#presentation"]').click();
-    
+
     // Vérifier que la section présentation est visible
     await expect(page.locator('#presentation')).toBeVisible();
     await expect(page.locator('text=La Capitale Spirituelle')).toBeVisible();
@@ -99,14 +99,14 @@ test.describe('Page Fès - Navigation et Quiz', () => {
 
     // Naviguer vers la section quiz
     await page.locator('a[href="#quiz"]').click();
-    
+
     // Vérifier que la section quiz est visible
     await expect(page.locator('#quiz')).toBeVisible();
     await expect(page.locator('text=Testez vos Connaissances')).toBeVisible();
 
     // Vérifier que le quiz s'affiche
     await expect(page.locator('text=Quiz Histoire de Fès')).toBeVisible();
-    
+
     // Attendre que le quiz se charge
     await page.waitForSelector('text=questions vous attendent', { timeout: 5000 });
   });
@@ -121,7 +121,7 @@ test.describe('Page Fès - Navigation et Quiz', () => {
     // Entrer un nom de joueur
     const nameInput = page.locator('input[type="text"]').filter({ hasPlaceholder: /nom|name/i });
     await nameInput.fill('Test Player');
-    
+
     // Démarrer le quiz
     const startButton = page.locator('button').filter({ hasText: /Commencer|Démarrer|Start/i });
     await startButton.click();
@@ -152,7 +152,7 @@ test.describe('Page Fès - Navigation et Quiz', () => {
 
     // Naviguer vers la section classement
     await page.locator('a[href="#classement"]').click();
-    
+
     // Vérifier que la section classement est visible
     await expect(page.locator('#classement')).toBeVisible();
     await expect(page.locator('text=Classement')).toBeVisible();
@@ -173,11 +173,11 @@ test.describe('Page Fès - Navigation et Quiz', () => {
   test('API Fès retourne du JSON valide', async ({ page }) => {
     // Tester l'API directement
     const response = await page.request.get('/api/cities/fes');
-    
+
     expect(response.status()).toBe(200);
-    
+
     const data = await response.json();
-    
+
     // Vérifier la structure des données
     expect(data).toHaveProperty('slug', 'fes');
     expect(data).toHaveProperty('title', 'Fès');
@@ -252,12 +252,12 @@ test.describe('Page Fès - Navigation et Quiz', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
-    
+
     // Vérifier qu'on peut naviguer vers le quiz au clavier
     const quizLink = page.locator('a[href="#quiz"]');
     await quizLink.focus();
     await page.keyboard.press('Enter');
-    
+
     await expect(page.locator('#quiz')).toBeInViewport();
   });
 
@@ -269,7 +269,7 @@ test.describe('Page Fès - Navigation et Quiz', () => {
     const backgroundImage = await heroSection.evaluate((el) => {
       return window.getComputedStyle(el).backgroundImage;
     });
-    
+
     // L'image devrait être chargée ou un gradient de fallback
     expect(backgroundImage).toBeTruthy();
   });

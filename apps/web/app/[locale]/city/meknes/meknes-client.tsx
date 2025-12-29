@@ -107,7 +107,7 @@ export default function MeknesClient() {
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-2xl font-bold mb-4">Impossible de charger les données de Meknès</h1>
-                    <p className="text-muted-foreground mb-6">Une erreur s'est produite</p>
+                    <p className="text-muted-foreground mb-6">Une erreur s&apos;est produite</p>
                     <Link href="/map">
                         <Button variant="outline">
                             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -201,10 +201,10 @@ export default function MeknesClient() {
                         </p>
 
                         <p>
-                            Sous l'impulsion de Moulay Ismail, Meknès devient le <em>"Versailles marocain"</em>, ornée de
+                            Sous l&apos;impulsion de Moulay Ismail, Meknès devient le <em>&quot;Versailles marocain&quot;</em>, ornée de
                             <strong> 25 kilomètres de remparts</strong>, de palais somptueux et de jardins luxuriants.
                             Le sultan y fait construire plus de 50 palais et édifices monumentaux, employant des dizaines de
-                            milliers d'artisans et de prisonniers de guerre européens pour ériger sa cité de rêve.
+                            milliers d&apos;artisans et de prisonniers de guerre européens pour ériger sa cité de rêve.
                         </p>
 
                         <div className="bg-amber-50 border-l-4 border-amber-500 p-6 my-6">
@@ -213,24 +213,24 @@ export default function MeknesClient() {
                                 Les Monuments Emblématiques
                             </h3>
                             <ul className="space-y-2 text-foreground">
-                                <li><strong>Bab Mansour el-Aleuj</strong> - La plus belle porte d'Afrique du Nord, achevée en 1732</li>
+                                <li><strong>Bab Mansour el-Aleuj</strong> - La plus belle porte d&apos;Afrique du Nord, achevée en 1732</li>
                                 <li><strong>Mausolée de Moulay Ismail</strong> - Sanctuaire majestueux aux colonnes de marbre</li>
                                 <li><strong>Heri es-Souani</strong> - Greniers et écuries royales pour 12 000 chevaux</li>
-                                <li><strong>Bassin de l'Agdal</strong> - Immense réservoir d'eau de 4 hectares</li>
+                                <li><strong>Bassin de l&apos;Agdal</strong> - Immense réservoir d&apos;eau de 4 hectares</li>
                             </ul>
                         </div>
 
                         <p>
-                            La médina historique de Meknès, <strong>classée au patrimoine mondial de l'UNESCO depuis 1996</strong>,
-                            témoigne de l'architecture hispano-mauresque exceptionnelle et du raffinement artistique de l'époque
+                            La médina historique de Meknès, <strong>classée au patrimoine mondial de l&apos;UNESCO depuis 1996</strong>,
+                            témoigne de l&apos;architecture hispano-mauresque exceptionnelle et du raffinement artistique de l&apos;époque
                             alaouite. Ses souks animés, ses medersas ornées de zelliges et ses palais cachés révèlent un patrimoine
-                            culturel d'une richesse inestimable.
+                            culturel d&apos;une richesse inestimable.
                         </p>
 
                         <p>
                             <Palmtree className="inline h-5 w-5 mr-1" />
                             À seulement 30 kilomètres se trouvent les <strong>ruines romaines de Volubilis</strong>, ancienne capitale
-                            de la Maurétanie Tingitane, offrant un témoignage unique de 2000 ans d'histoire au cœur du Maroc.
+                            de la Maurétanie Tingitane, offrant un témoignage unique de 2000 ans d&apos;histoire au cœur du Maroc.
                         </p>
                     </div>
                 </div>
@@ -284,7 +284,7 @@ export default function MeknesClient() {
                             <div className="flex-1 border-l-4 border-yellow-500 pl-6 pb-8">
                                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                                     <Crown className="h-5 w-5 text-yellow-500" />
-                                    L'Âge d'Or sous Moulay Ismail
+                                    L&apos;Âge d&apos;Or sous Moulay Ismail
                                 </h3>
                                 <p className="text-muted-foreground leading-relaxed mb-3">
                                     Le sultan <strong>Moulay Ismail</strong> choisit Meknès comme capitale de son empire et
@@ -298,9 +298,9 @@ export default function MeknesClient() {
                                     de marbre vert et de zelliges somptueux, reste la plus belle du Maghreb.
                                 </p>
                                 <p className="text-muted-foreground leading-relaxed">
-                                    Le sultan fait également édifier son <strong>mausolée</strong>, chef-d'œuvre de
-                                    l'architecture alaouite avec ses colonnes de marbre, ses plafonds en cèdre sculpté
-                                    et ses fontaines de zellige. C'est le seul monument religieux du Maroc accessible
+                                    Le sultan fait également édifier son <strong>mausolée</strong>, chef-d&apos;œuvre de
+                                    l&apos;architecture alaouite avec ses colonnes de marbre, ses plafonds en cèdre sculpté
+                                    et ses fontaines de zellige. C&apos;est le seul monument religieux du Maroc accessible
                                     aux non-musulmans.
                                 </p>
                             </div>
@@ -349,12 +349,12 @@ export default function MeknesClient() {
                                     Reconnaissance UNESCO
                                 </h3>
                                 <p className="text-muted-foreground leading-relaxed mb-3">
-                                    La <strong>médina historique de Meknès</strong> est inscrite au patrimoine mondial de l'UNESCO,
+                                    La <strong>médina historique de Meknès</strong> est inscrite au patrimoine mondial de l&apos;UNESCO,
                                     reconnaissant son architecture hispano-mauresque exceptionnelle, ses monuments impériaux
-                                    uniques et son témoignage de l'apogée de la dynastie alaouite.
+                                    uniques et son témoignage de l&apos;apogée de la dynastie alaouite.
                                 </p>
                                 <p className="text-muted-foreground leading-relaxed">
-                                    Aujourd'hui, Meknès attire des visiteurs du monde entier, séduits par son authenticité
+                                    Aujourd&apos;hui, Meknès attire des visiteurs du monde entier, séduits par son authenticité
                                     préservée, son artisanat traditionnel (dinanderie, tapis, poterie) et sa proximité avec
                                     les sites archéologiques de Volubilis et Moulay Idriss Zerhoun.
                                 </p>
