@@ -165,7 +165,7 @@ export default function FesPageClient() {
                         </div>
                         <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-colors">
                             <Users className="h-5 w-5 text-green-400" />
-                            <span>1.15 Millions d'habitants</span>
+                            <span>1.15 Millions d&apos;habitants</span>
                         </div>
                         <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-colors">
                             <BookOpen className="h-5 w-5 text-yellow-400" />
@@ -210,18 +210,18 @@ export default function FesPageClient() {
                 <div className="container mx-auto px-4 max-w-4xl text-center">
                     <h2 className="text-3xl font-bold mb-8">La Capitale Spirituelle</h2>
                     <p className="text-lg text-muted-foreground leading-relaxed">
-                        Fès est la capitale spirituelle et culturelle du Maroc, une ville qui incarne plus de douze siècles d'histoire et de tradition. 
-                        Fondée en 789 par Idris Ier, elle abrite la médina la plus ancienne et la mieux préservée du monde arabe, 
-                        classée au patrimoine mondial de l'UNESCO depuis 1981.
+                        Fès est la capitale spirituelle et culturelle du Maroc, une ville qui incarne plus de douze siècles d&apos;histoire et de tradition.
+                        Fondée en 789 par Idris Ier, elle abrite la médina la plus ancienne et la mieux préservée du monde arabe,
+                        classée au patrimoine mondial de l&apos;UNESCO depuis 1981.
                     </p>
                     <p className="text-lg text-muted-foreground leading-relaxed mt-4">
-                        Avec une population de plus d'un million d'habitants, Fès est un centre majeur de l'artisanat traditionnel, 
-                        de l'éducation et de la culture islamique. La ville se distingue par son architecture andalouse, 
+                        Avec une population de plus d&apos;un million d&apos;habitants, Fès est un centre majeur de l&apos;artisanat traditionnel,
+                        de l&apos;éducation et de la culture islamique. La ville se distingue par son architecture andalouse,
                         ses médersas historiques, et ses souks animés où se perpétuent des métiers ancestraux.
                     </p>
                     <p className="text-lg text-muted-foreground leading-relaxed mt-4">
-                        Fès est également le berceau de l'Université Al Quaraouiyine, fondée en 859, considérée comme la plus ancienne 
-                        université du monde encore en activité. Cette institution millénaire a façonné l'identité intellectuelle 
+                        Fès est également le berceau de l&apos;Université Al Quaraouiyine, fondée en 859, considérée comme la plus ancienne
+                        université du monde encore en activité. Cette institution millénaire a façonné l&apos;identité intellectuelle
                         et spirituelle de la ville.
                     </p>
                 </div>
@@ -291,7 +291,7 @@ export default function FesPageClient() {
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold mb-4">Testez vos Connaissances</h2>
                         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Maintenant que vous avez découvert l'histoire de Fès,
+                            Maintenant que vous avez découvert l&apos;histoire de Fès,
                             évaluez vos connaissances avec notre quiz interactif de 10 questions.
                         </p>
                     </div>

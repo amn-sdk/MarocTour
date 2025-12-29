@@ -6,7 +6,7 @@ export default function MapTestPage() {
   return (
     <div className="container mx-auto py-8 px-4 space-y-8">
       <h1 className="text-3xl font-bold">Test de Diagnostic des Cartes</h1>
-      
+
       <div className="space-y-6">
         <section>
           <h2 className="text-xl font-semibold mb-4">🧪 Test Simple MapLibre GL</h2>
@@ -28,7 +28,7 @@ export default function MapTestPage() {
             <p>2. Regardez les logs commençant par 🧪, 🗺️, ✅ ou ❌</p>
             <p>3. Le test simple devrait marcher en premier</p>
             <p>4. Si le test simple marche mais pas MapClient, il y a un problème dans MapClient</p>
-            <p>5. Si rien ne marche, il y a un problème d'import ou d'environnement</p>
+            <p>5. Si rien ne marche, il y a un problème d&apos;import ou d&apos;environnement</p>
           </div>
         </section>
       </div>

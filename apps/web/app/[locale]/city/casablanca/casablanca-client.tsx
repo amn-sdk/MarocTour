@@ -165,7 +165,7 @@ export default function CasablancaClient() {
                         </div>
                         <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-colors">
                             <Users className="h-5 w-5 text-green-400" />
-                            <span>3.36 Millions d'habitants</span>
+                            <span>3.36 Millions d&apos;habitants</span>
                         </div>
                         <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-colors">
                             <Building2 className="h-5 w-5 text-yellow-400" />
@@ -210,9 +210,9 @@ export default function CasablancaClient() {
                 <div className="container mx-auto px-4 max-w-4xl text-center">
                     <h2 className="text-3xl font-bold mb-8">La Ville Blanche</h2>
                     <p className="text-lg text-muted-foreground leading-relaxed">
-                        Casablanca est bien plus qu'une simple capitale économique. C'est un laboratoire d'architecture à ciel ouvert,
+                        Casablanca est bien plus qu&apos;une simple capitale économique. C&apos;est un laboratoire d&apos;architecture à ciel ouvert,
                         où les immeubles Art Déco des années 30 côtoient les gratte-ciels modernes de Casa Anfa.
-                        Ville effervescente, elle incarne le Maroc moderne, tourné vers l'avenir tout en restant fier de son héritage.
+                        Ville effervescente, elle incarne le Maroc moderne, tourné vers l&apos;avenir tout en restant fier de son héritage.
                     </p>
                 </div>
             </section>
@@ -233,7 +233,7 @@ export default function CasablancaClient() {
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-black mb-4">Une Histoire Millénaire</h2>
                         <p className="text-xl text-muted-foreground">
-                            De l'antique Anfa à la métropole mondiale
+                            De l&apos;antique Anfa à la métropole mondiale
                         </p>
                         <div className="flex items-center justify-center gap-2 mt-4 text-sm font-medium text-primary">
                             <Clock className="h-4 w-4" />
@@ -281,7 +281,7 @@ export default function CasablancaClient() {
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold mb-4">Testez vos Connaissances</h2>
                         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Maintenant que vous avez découvert l'histoire de Casablanca,
+                            Maintenant que vous avez découvert l&apos;histoire de Casablanca,
                             évaluez vos connaissances avec notre quiz interactif de 10 questions.
                         </p>
                     </div>

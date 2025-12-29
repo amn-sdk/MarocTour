@@ -222,7 +222,7 @@ export default function NadorPageClient() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Histoire de Nador</h2>
             <p className="text-xl text-gray-600">
-              De l'Antiquité à nos jours, découvrez l'évolution de cette perle du Rif Oriental
+              De l&apos;Antiquité à nos jours, découvrez l&apos;évolution de cette perle du Rif Oriental
             </p>
             <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">
               <Clock className="h-4 w-4" />
@@ -261,7 +261,7 @@ export default function NadorPageClient() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Testez vos Connaissances</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Maintenant que vous avez découvert l'histoire de Nador,
+              Maintenant que vous avez découvert l&apos;histoire de Nador,
               évaluez vos connaissances avec notre quiz interactif de 10 questions.
             </p>
           </div>
@@ -291,7 +291,7 @@ export default function NadorPageClient() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gray-50 rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold mb-4">Comment s'y rendre</h3>
+              <h3 className="text-xl font-bold mb-4">Comment s&apos;y rendre</h3>
               <ul className="space-y-3 text-gray-700">
                 <li className="flex items-start gap-3">
                   <span className="text-blue-600">✈️</span>
@@ -348,9 +348,9 @@ export default function NadorPageClient() {
       {/* Footer call-to-action */}
       <section className="py-12 bg-blue-600 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold mb-4">Explorez d'autres villes du Maroc</h2>
+          <h2 className="text-2xl font-bold mb-4">Explorez d&apos;autres villes du Maroc</h2>
           <p className="text-blue-100 mb-6">
-            Découvrez l'histoire et la culture des autres perles du royaume
+            Découvrez l&apos;histoire et la culture des autres perles du royaume
           </p>
           <Link href="/map">
             <Button variant="secondary" size="lg">

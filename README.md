@@ -6,6 +6,25 @@
 
 MarocTour est une plateforme web permettant de découvrir les villes et régions du Maroc à travers une carte interactive vectorielle, des itinéraires personnalisés et des quiz culturels. L'application supporte le multilinguisme (FR/EN/AR) et offre une expérience optimale sur tous les appareils.
 
+## 🏙️ Villes Implémentées
+
+Actuellement, **5 villes marocaines** sont entièrement fonctionnelles avec pages dédiées, quiz interactifs et leaderboards :
+
+| Ville | Page Dédiée | Quiz | Leaderboard | Images | Statut |
+|-------|-------------|------|-------------|--------|--------|
+| **Fès** | ✅ | ✅ (10 questions) | ✅ | ✅ | Production |
+| **Nador** | ✅ | ✅ (10 questions) | ✅ | ✅ | Production |
+| **Casablanca** | ✅ | ✅ (10 questions) | ✅ | ✅ | Production |
+| **Kénitra** | ✅ | ✅ (10 questions) | ✅ | ✅ | Production |
+| **Meknès** | ✅ | ✅ (10 questions) | ✅ | ✅ | Production |
+
+Chaque ville dispose de :
+- 📜 Contenu historique enrichi avec timeline
+- 🖼️ Images historiques authentiques
+- 🎯 Quiz interactif de 10 questions
+- 🏆 Système de classement (leaderboard)
+- 🌍 Intégration complète avec le backend
+
 ## 🏗️ Architecture
 
 ```
@@ -404,10 +423,41 @@ kubectl apply -f k8s/frontend-service.yaml
 
 ## 🔄 CI/CD Pipelines
 
-Trois workflows sont configurés dans `.github/workflows/` :
+Trois workflows GitHub Actions sont configurés pour automatiser le cycle de vie de développement :
 
-1. **App Tests** (`app-tests.yml`) : Lance les tests backend (`pytest`) et frontend (`pnpm test`) à chaque Push/PR.
-2. **Build and Push** (`build-and-push.yml`) : Construit et push les images Docker sur Docker Hub (déclenché sur push `main` ou tags).
-3. **Deploy to Kubernetes** (`deploy-k8s.yml`) : Met à jour les déploiements K8s avec les nouvelles images.
+### 1. 🧪 App Tests (`app-tests.yml`)
+Déclenché à chaque `push` sur toutes les branches et `pull_request`.
+- **Backend Job** :
+  - Setup Python 3.11
+  - Installation des dépendances (`pip install`)
+  - Exécution des tests unitaires avec `pytest`
+- **Frontend Job** :
+  - Setup Node.js 20
+  - Installation des dépendances (`pnpm install`)
+  - Linting (`pnpm lint`) et Build (`pnpm build`)
+  - Tests unitaires (`pnpm test`)
+
+### 2. 🐳 Build and Push (`build-and-push.yml`)
+Déclenché uniquement sur les push vers `main` ou les tags (`v*`).
+- Connexion au registre de conteneurs (Docker Hub / GHCR)
+- Build des images Docker optimisées (multi-stage)
+  - `maroctour-web:latest`
+  - `maroctour-api:latest`
+- Push des images vers le registre
+- Scan de vulnérabilités (Trivy)
+
+### 3. 🚀 Deploy to Kubernetes (`deploy-k8s.yml`)
+Déclenché après le succès du build.
+- Configuration de `kubectl` avec le cluster cible
+- Mise à jour des images dans les déploiements
+- Application des manifests (`kubectl apply`)
+- Vérification du rollout (`kubectl rollout status`)
+
+### 🔑 Gestion des Secrets
+Les informations sensibles sont stockées dans les GitHub Secrets :
+- `DOCKER_USERNAME` / `DOCKER_PASSWORD`
+- `KUBE_CONFIG` (pour l'accès au cluster)
+- `POSTGRES_PASSWORD`
+
 
 
