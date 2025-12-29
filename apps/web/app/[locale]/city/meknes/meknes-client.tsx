@@ -1,17 +1,94 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Quiz } from '@/components/quiz/quiz';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MapPin, Users, Building2, Crown, Landmark, Palmtree } from 'lucide-react';
 import Link from 'next/link';
 
+interface QuizScore {
+    id: string;
+    playerName: string;
+    score: number;
+    totalQuestions: number;
+    percentage: number;
+    completedAt: string;
+    city: string;
+    timeSpent: number;
+}
+
+async function getMeknesData() {
+    try {
+        const response = await fetch('/api/cities/meknes', {
+            cache: 'force-cache'
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch Meknès data');
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error fetching Meknès data:', error);
+        return null;
+    }
+}
+
 export default function MeknesClient() {
+    const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [currentScore, setCurrentScore] = useState<QuizScore | null>(null);
 
     useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 500);
-        return () => clearTimeout(timer);
+        getMeknesData().then((result) => {
+            setData(result);
+            setLoading(false);
+        });
     }, []);
+
+    const handleQuizComplete = async (score: number, totalQuestions: number, timeSpent: number, playerName: string) => {
+        const percentage = Math.round((score / totalQuestions) * 100);
+        const newScore: QuizScore = {
+            id: Date.now().toString(),
+            playerName: playerName,
+            score,
+            totalQuestions,
+            percentage,
+            completedAt: new Date().toISOString(),
+            city: 'Meknès',
+            timeSpent
+        };
+
+        setCurrentScore(newScore);
+
+        // Submit to backend
+        try {
+            // 1. Get City ID
+            const cityRes = await fetch('http://localhost:8000/api/v1/cities/slug/meknes');
+            if (!cityRes.ok) throw new Error('Failed to fetch city ID');
+            const cityData = await cityRes.json();
+
+            // 2. Submit Attempt
+            const attemptRes = await fetch('http://localhost:8000/api/v1/quiz/attempt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    city_id: cityData.id,
+                    player_name: playerName,
+                    answers: [],
+                    score: percentage
+                })
+            });
+
+            if (!attemptRes.ok) {
+                console.error('Failed to submit score to backend');
+            } else {
+                console.log('Score submitted successfully!');
+            }
+        } catch (error) {
+            console.error('Error submitting score:', error);
+        }
+    };
 
     if (loading) {
         return (
@@ -19,6 +96,23 @@ export default function MeknesClient() {
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
                     <p className="text-muted-foreground italic">Découverte de la cité impériale...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!data) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold mb-4">Impossible de charger les données de Meknès</h1>
+                    <p className="text-muted-foreground mb-6">Une erreur s'est produite</p>
+                    <Link href="/map">
+                        <Button variant="outline">
+                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            Retour à la carte
+                        </Button>
+                    </Link>
                 </div>
             </div>
         );
@@ -268,6 +362,22 @@ export default function MeknesClient() {
                     </div>
                 </div>
             </section>
+
+            {/* Quiz Section */}
+            {data.quiz && data.quiz.length > 0 && (
+                <section id="quiz" className="py-20 bg-background">
+                    <div className="container mx-auto px-4 max-w-4xl">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                            <Crown className="inline h-10 w-10 text-yellow-500 mr-3" />
+                            Quiz sur Meknès
+                        </h2>
+                        <Quiz
+                            questions={data.quiz}
+                            onQuizComplete={handleQuizComplete}
+                        />
+                    </div>
+                </section>
+            )}
         </div>
     );
 }
