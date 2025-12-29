@@ -63,13 +63,14 @@ export function Footer() {
               </li>
             </ul>
           </div>
-
-          <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>
-              © {new Date().getFullYear()} MarocTour. {t('rights')}
-            </p>
-          </div>
         </div>
+
+        <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
+          <p>
+            © {new Date().getFullYear()} MarocTour. {t('rights')}
+          </p>
+        </div>
+      </div>
     </footer>
   );
 }
