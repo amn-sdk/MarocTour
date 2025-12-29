@@ -121,7 +121,7 @@ export default function NadorPageClient() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -178,7 +178,7 @@ export default function NadorPageClient() {
         {/* Navigation retour */}
         <div className="absolute top-6 left-6 z-20">
           <Link href="/map">
-            <Button variant="secondary" className="bg-white/90 backdrop-blur-sm">
+            <Button variant="secondary" className="bg-white/90 backdrop-blur-sm text-foreground hover:bg-white/75">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Retour à la carte
             </Button>
@@ -187,19 +187,19 @@ export default function NadorPageClient() {
       </section>
 
       {/* Navigation interne */}
-      <nav className="bg-white shadow-sm sticky top-0 z-50">
+      <nav className="bg-card shadow-sm sticky top-0 z-50 border-b">
         <div className="container mx-auto px-4">
           <div className="flex gap-8 py-4 overflow-x-auto">
-            <a href="#histoire" className="text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap transition-colors">
+            <a href="#histoire" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap transition-colors">
               📚 Histoire
             </a>
-            <a href="#quiz" className="text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap transition-colors">
+            <a href="#quiz" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap transition-colors">
               🧠 Quiz
             </a>
-            <a href="#classement" className="text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap transition-colors">
+            <a href="#classement" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap transition-colors">
               🏆 Classement
             </a>
-            <a href="#infos" className="text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap transition-colors">
+            <a href="#infos" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap transition-colors">
               ℹ️ Informations
             </a>
           </div>
@@ -207,10 +207,10 @@ export default function NadorPageClient() {
       </nav>
 
       {/* Section Histoire */}
-      <section id="histoire" className="py-16 relative overflow-hidden">
+      <section id="histoire" className="py-16 relative overflow-hidden bg-background">
         {/* Background vintage pour l'ambiance */}
         <div
-          className="absolute inset-0 opacity-5 z-0 pointer-events-none"
+          className="absolute inset-0 opacity-5 z-0 pointer-events-none dark:opacity-[0.02]"
           style={{
             backgroundImage: 'url(/images/cities/nador/history_ancient.png)',
             backgroundSize: 'cover',
@@ -221,10 +221,10 @@ export default function NadorPageClient() {
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Histoire de Nador</h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted-foreground">
               De l&apos;Antiquité à nos jours, découvrez l&apos;évolution de cette perle du Rif Oriental
             </p>
-            <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">
+            <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
               <Clock className="h-4 w-4" />
               <span>Lecture : environ 10 minutes</span>
             </div>
@@ -232,19 +232,19 @@ export default function NadorPageClient() {
 
           <div className="space-y-12">
             {data.history.map((period: any, index: number) => (
-              <article key={period.id} className="bg-white rounded-lg shadow-md p-8">
+              <article key={period.id} className="bg-card text-card-foreground rounded-lg shadow-md p-8 border">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-lg">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-lg">
                       {index + 1}
                     </div>
                   </div>
 
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    <h3 className="text-2xl font-bold mb-4">
                       {period.title}
                     </h3>
-                    <div className="prose prose-lg text-gray-700 leading-relaxed">
+                    <div className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed">
                       <p>{period.text}</p>
                     </div>
                   </div>
@@ -256,11 +256,11 @@ export default function NadorPageClient() {
       </section>
 
       {/* Section Quiz */}
-      <section id="quiz" className="py-16 bg-white">
+      <section id="quiz" className="py-16 bg-card border-y">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Testez vos Connaissances</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Maintenant que vous avez découvert l&apos;histoire de Nador,
               évaluez vos connaissances avec notre quiz interactif de 10 questions.
             </p>
@@ -275,7 +275,7 @@ export default function NadorPageClient() {
       </section>
 
       {/* Section Classement */}
-      <section id="classement" className="py-16 bg-gray-50">
+      <section id="classement" className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <QuizLeaderboard
             currentScore={currentScore || undefined}
@@ -285,42 +285,42 @@ export default function NadorPageClient() {
       </section>
 
       {/* Section Informations */}
-      <section id="infos" className="py-16 bg-white">
+      <section id="infos" className="py-16 bg-card border-y">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl font-bold text-center mb-8">Informations Pratiques</h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gray-50 rounded-lg shadow-md p-6">
+            <div className="bg-muted/30 rounded-lg shadow-sm p-6 border">
               <h3 className="text-xl font-bold mb-4">Comment s&apos;y rendre</h3>
-              <ul className="space-y-3 text-gray-700">
+              <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
-                  <span className="text-blue-600">✈️</span>
+                  <span className="text-primary">✈️</span>
                   <span><strong>Aéroport :</strong> Aéroport de Nador-Al Aroui (15 km du centre)</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-blue-600">🚌</span>
+                  <span className="text-primary">🚌</span>
                   <span><strong>Bus :</strong> Liaisons quotidiennes depuis Casablanca, Rabat, Fès</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-blue-600">🚗</span>
+                  <span className="text-primary">🚗</span>
                   <span><strong>Route :</strong> A2 depuis Fès (3h30), A1 depuis Oujda (2h)</span>
                 </li>
               </ul>
             </div>
 
-            <div className="bg-gray-50 rounded-lg shadow-md p-6">
+            <div className="bg-muted/30 rounded-lg shadow-sm p-6 border">
               <h3 className="text-xl font-bold mb-4">Sites à Découvrir</h3>
-              <ul className="space-y-3 text-gray-700">
+              <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
-                  <span className="text-blue-600">🏛️</span>
+                  <span className="text-primary">🏛️</span>
                   <span><strong>Lagune de Marchica :</strong> Écosystème préservé et plages</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-blue-600">⚓</span>
+                  <span className="text-primary">⚓</span>
                   <span><strong>Port de Beni Ensar :</strong> Animation et restaurants de poisson</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-blue-600">🏔️</span>
+                  <span className="text-primary">🏔️</span>
                   <span><strong>Monts du Rif :</strong> Randonnées et paysages montagnards</span>
                 </li>
               </ul>
@@ -328,9 +328,9 @@ export default function NadorPageClient() {
           </div>
 
           {/* Sources */}
-          <div className="mt-12 bg-gray-50 rounded-lg shadow-md p-6">
+          <div className="mt-12 bg-muted/30 rounded-lg shadow-sm p-6 border">
             <h3 className="text-lg font-bold mb-4">Sources et Références</h3>
-            <div className="text-sm text-gray-600 space-y-2">
+            <div className="text-sm text-muted-foreground space-y-2">
 
               <div>
                 <strong>Sources principales :</strong>
@@ -346,10 +346,10 @@ export default function NadorPageClient() {
       </section>
 
       {/* Footer call-to-action */}
-      <section className="py-12 bg-blue-600 text-white">
+      <section className="py-12 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold mb-4">Explorez d&apos;autres villes du Maroc</h2>
-          <p className="text-blue-100 mb-6">
+          <p className="text-primary-foreground/90 mb-6">
             Découvrez l&apos;histoire et la culture des autres perles du royaume
           </p>
           <Link href="/map">

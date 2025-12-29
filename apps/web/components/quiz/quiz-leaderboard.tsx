@@ -68,7 +68,7 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
       const legacyScores = legacy ? JSON.parse(legacy) : [];
       const savedScores = localStorage.getItem(key);
       const allScores = savedScores ? JSON.parse(savedScores) : legacyScores;
-      
+
       // Vérifier si ce score n'est pas déjà sauvegardé
       const exists = allScores.some((score: QuizScore) => score.id === currentScore.id);
       if (!exists) {
@@ -86,7 +86,7 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
 
   const loadScoresFromBackend = async () => {
     if (!cityId) return;
-    
+
     setLoading(true);
     try {
       const response = await fetch(`http://localhost:8000/api/v1/quiz/top-scores?limit=10&city_id=${cityId}`);
@@ -102,15 +102,15 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
           city: s.city_name || city,
           timeSpent: 0, // Backend doesn't store time yet
         }));
-        
+
         // Merge with localStorage scores for time data
         const savedScores = localStorage.getItem(key);
         if (savedScores) {
           const localScores: QuizScore[] = JSON.parse(savedScores);
           const mergedScores = formattedScores.map(backendScore => {
             const localMatch = localScores.find(
-              (ls: QuizScore) => ls.playerName === backendScore.playerName && 
-              Math.abs(new Date(ls.completedAt).getTime() - new Date(backendScore.completedAt).getTime()) < 60000
+              (ls: QuizScore) => ls.playerName === backendScore.playerName &&
+                Math.abs(new Date(ls.completedAt).getTime() - new Date(backendScore.completedAt).getTime()) < 60000
             );
             return localMatch ? { ...backendScore, timeSpent: localMatch.timeSpent } : backendScore;
           });
@@ -163,7 +163,7 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
     const savedScores = localStorage.getItem(key);
     const allScores = savedScores ? JSON.parse(savedScores) : [];
     allScores.push(newScore);
-    
+
     localStorage.setItem(key, JSON.stringify(allScores));
     if (cityId) {
       loadScoresFromBackend();
@@ -207,22 +207,22 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mt-8">
+    <div className="bg-card text-card-foreground rounded-lg shadow-lg p-6 mt-8 border">
       <div className="flex items-center gap-3 mb-6">
-        <BarChart3 className="h-6 w-6 text-blue-600" />
+        <BarChart3 className="h-6 w-6 text-primary" />
         <h2 className="text-2xl font-bold">Classement - Quiz {city}</h2>
       </div>
 
       {/* Score actuel du joueur */}
       {currentScore && (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-          <h3 className="font-semibold text-green-800 mb-2">
+        <div className="bg-green-100/50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
+          <h3 className="font-semibold text-green-800 dark:text-green-400 mb-2">
             🎉 Performance de {currentScore.playerName}
           </h3>
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-green-600">
+                <span className="text-2xl font-bold text-green-600 dark:text-green-500">
                   {currentScore.score}/{currentScore.totalQuestions}
                 </span>
                 <span className={`font-semibold ${getScoreColor(currentScore.percentage)}`}>
@@ -233,12 +233,12 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
                   {getPlayerLevel(currentScore.score, currentScore.totalQuestions).level}
                 </span>
               </div>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 Temps: {formatTime(currentScore.timeSpent)}
               </p>
             </div>
             <div className="text-right">
-              <div className="text-sm text-green-600 font-medium">
+              <div className="text-sm text-green-600 dark:text-green-500 font-medium">
                 ✅ Enregistré au classement !
               </div>
             </div>
@@ -248,8 +248,8 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
 
       {/* Loading state */}
       {loading && (
-        <div className="text-center py-8 text-gray-500">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4" />
+        <div className="text-center py-8 text-muted-foreground">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4" />
           <p>Chargement du classement...</p>
         </div>
       )}
@@ -260,25 +260,24 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
           {scores.map((score, index) => (
             <div
               key={score.id}
-              className={`flex items-center justify-between p-4 rounded-lg transition-colors ${
-                index < 3 ? 'bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200' : 
-                'bg-gray-50 hover:bg-gray-100'
-              }`}
+              className={`flex items-center justify-between p-4 rounded-lg transition-colors border ${index < 3 ? 'bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/10 dark:to-orange-900/10 border-yellow-200 dark:border-yellow-900/30' :
+                  'bg-muted/30 hover:bg-muted/50 border-transparent'
+                }`}
             >
               <div className="flex items-center gap-4">
                 <div className="flex-shrink-0 w-8 flex justify-center">
                   {getRankIcon(index)}
                 </div>
-                
+
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-gray-900">{score.playerName}</span>
+                    <span className="font-semibold text-foreground">{score.playerName}</span>
                     <span className={`text-sm ${getPlayerLevel(score.score, score.totalQuestions).color}`}>
-                      {getPlayerLevel(score.score, score.totalQuestions).icon} 
+                      {getPlayerLevel(score.score, score.totalQuestions).icon}
                       {getPlayerLevel(score.score, score.totalQuestions).level}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-gray-600">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <span>
                       <Calendar className="inline h-3 w-3 mr-1" />
                       {new Date(score.completedAt).toLocaleDateString('fr-FR')}
@@ -290,7 +289,7 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
 
               <div className="text-right">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold">{score.score}/{score.totalQuestions}</span>
+                  <span className="text-lg font-bold text-foreground">{score.score}/{score.totalQuestions}</span>
                   <span className={`font-semibold ${getScoreColor(score.percentage)}`}>
                     {score.percentage}%
                   </span>
@@ -300,8 +299,8 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
           ))}
         </div>
       ) : !loading ? (
-        <div className="text-center py-8 text-gray-500">
-          <Trophy className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+        <div className="text-center py-8 text-muted-foreground">
+          <Trophy className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
           <p>Aucun score enregistré pour le moment.</p>
           <p className="text-sm">Soyez le premier à apparaître dans le classement !</p>
         </div>
@@ -309,23 +308,23 @@ export function QuizLeaderboard({ currentScore, city, storageKey }: QuizLeaderbo
 
       {/* Statistiques globales */}
       {scores.length > 0 && (
-        <div className="mt-6 pt-4 border-t border-gray-200">
+        <div className="mt-6 pt-4 border-t border-border">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-2xl font-bold text-blue-600">{scores.length}</div>
-              <div className="text-sm text-gray-600">Participants</div>
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-500">{scores.length}</div>
+              <div className="text-sm text-muted-foreground">Participants</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-500">
                 {Math.round(scores.reduce((acc, s) => acc + s.percentage, 0) / scores.length)}%
               </div>
-              <div className="text-sm text-gray-600">Score Moyen</div>
+              <div className="text-sm text-muted-foreground">Score Moyen</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-purple-600">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-500">
                 {formatTime(Math.round(scores.reduce((acc, s) => acc + s.timeSpent, 0) / scores.length))}
               </div>
-              <div className="text-sm text-gray-600">Temps Moyen</div>
+              <div className="text-sm text-muted-foreground">Temps Moyen</div>
             </div>
           </div>
         </div>

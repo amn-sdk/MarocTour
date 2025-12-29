@@ -2,6 +2,10 @@
 
 > Application full-stack moderne avec carte interactive, itinéraires touristiques et quiz culturels.
 
+> 👤 **Auteur** : Amirhossein POUYANFAR/ Amine LADEL / Yacine HOUSNY / Driss DRIYEJ / Amine SADDIK
+> 🎓 **Filière** : E4 / DevOps
+> 🏫 **École** : ESIEE Paris (2024-2025)
+
 ## 📋 Vue d'ensemble
 
 MarocTour est une plateforme web permettant de découvrir les villes et régions du Maroc à travers une carte interactive vectorielle, des itinéraires personnalisés et des quiz culturels. L'application supporte le multilinguisme (FR/EN/AR) et offre une expérience optimale sur tous les appareils.

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { MapPin, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { LangSwitcher } from '@/components/layout/lang-switcher';
+// LangSwitcher removed
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -52,8 +52,8 @@ export function Header() {
         {/* Right Side Actions */}
         <div className="flex items-center space-x-2">
           <ThemeToggle />
-          <LangSwitcher />
-          
+          {/* LangSwitcher removed */}
+
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
