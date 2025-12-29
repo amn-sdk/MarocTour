@@ -331,7 +331,7 @@ export default function NadorPageClient() {
           <div className="mt-12 bg-gray-50 rounded-lg shadow-md p-6">
             <h3 className="text-lg font-bold mb-4">Sources et Références</h3>
             <div className="text-sm text-gray-600 space-y-2">
-              <p><strong>Dernière mise à jour :</strong> {data.meta.last_updated}</p>
+
               <div>
                 <strong>Sources principales :</strong>
                 <ul className="list-disc list-inside mt-2 space-y-1">

@@ -2,8 +2,7 @@ import { useTranslations } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { MapPin, Route, Brain, Phone } from 'lucide-react';
-import { TopScores } from '@/components/quiz/top-scores';
+import { MapPin, Brain } from 'lucide-react';
 
 export default function HomePage({
   params: { locale },
@@ -40,12 +39,7 @@ export default function HomePage({
                 {t('hero.exploreMap')}
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm">
-              <Link href="/itineraries">
-                <Route className="mr-2 h-5 w-5" />
-                {t('hero.itineraries')}
-              </Link>
-            </Button>
+
           </div>
         </div>
       </section>
@@ -55,7 +49,7 @@ export default function HomePage({
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
           {t('features.title')}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <FeatureCard
             icon={<MapPin className="h-12 w-12 text-morocco-red" />}
             title={t('features.map.title')}
@@ -63,53 +57,35 @@ export default function HomePage({
             href="/map"
           />
           <FeatureCard
-            icon={<Route className="h-12 w-12 text-morocco-green" />}
-            title={t('features.itineraries.title')}
-            description={t('features.itineraries.description')}
-            href="/itineraries"
-          />
-          <FeatureCard
             icon={<Brain className="h-12 w-12 text-morocco-gold" />}
             title={t('features.quiz.title')}
             description={t('features.quiz.description')}
             href="/quiz"
           />
-          <FeatureCard
-            icon={<Phone className="h-12 w-12 text-primary" />}
-            title={t('features.contact.title')}
-            description={t('features.contact.description')}
-            href="/contact"
-          />
         </div>
       </section>
 
-      {/* Top Scores Section */}
-      <section className="bg-muted py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-            {t('topScores.title')}
-          </h2>
-          <TopScores limit={10} />
-          <div className="text-center mt-8">
-            <Button asChild variant="outline">
-              <Link href="/quiz">
-                {t('topScores.participate')}
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-morocco-red to-morocco-green py-16">
-        <div className="container mx-auto px-4 text-center text-white">
+      <section className="relative py-20 overflow-hidden">
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: 'url(/images/cta-morocco.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'brightness(0.6)',
+          }}
+        />
+        <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             {t('cta.title')}
           </h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             {t('cta.description')}
           </p>
-          <Button asChild size="lg" className="bg-white text-morocco-red hover:bg-white/90">
+          <Button asChild size="lg" className="bg-morocco-red text-white hover:bg-morocco-red/90 border-none shadow-lg">
             <Link href="/map">
               {t('cta.button')}
             </Link>
