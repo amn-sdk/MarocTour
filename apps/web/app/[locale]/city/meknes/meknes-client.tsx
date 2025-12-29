@@ -29,19 +29,25 @@ export default function MeknesClient() {
             {/* Hero Section - Structure identique à Casablanca */}
             <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    {/* Image de gauche - Bab Mansour (placeholder gradient) */}
+                    {/* Image de gauche - Bab Mansour */}
                     <div
                         className="absolute top-0 left-0 w-1/2 h-full"
                         style={{
-                            background: 'linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%)',
+                            backgroundImage: 'url(/images/cities/meknes/bab_mansour.png)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
                         }}
                     />
 
-                    {/* Image de droite - Mausolée Moulay Ismail (placeholder gradient) */}
+                    {/* Image de droite - Mausolée Moulay Ismail */}
                     <div
                         className="absolute top-0 right-0 w-1/2 h-full"
                         style={{
-                            background: 'linear-gradient(135deg, #654321 0%, #8B6914 50%, #DAA520 100%)',
+                            backgroundImage: 'url(/images/cities/meknes/mausoleum.png)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
                         }}
                     />
 
@@ -136,8 +142,19 @@ export default function MeknesClient() {
             </section>
 
             {/* History Section - Timeline enrichie */}
-            <section className="py-20 bg-muted/30">
-                <div className="container mx-auto px-4 max-w-6xl">
+            <section className="py-20 bg-muted/30 relative overflow-hidden">
+                {/* Background image with subtle opacity */}
+                <div
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                        backgroundImage: 'url(/images/cities/meknes/history_imperial.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                    }}
+                />
+
+                <div className="container mx-auto px-4 max-w-6xl relative z-10">
                     <div className="flex items-center gap-3 mb-12 justify-center">
                         <Landmark className="h-8 w-8 text-primary" />
                         <h2 className="text-3xl md:text-4xl font-bold text-center">
