@@ -4,7 +4,7 @@
 
 > 👤 **Auteur** : Amirhossein POUYANFAR/ Amine LADEL / Yacine HOUSNY / Driss DRIYEJ / Amine SADDIK
 > 🎓 **Filière** : E4 / DevOps
-> 🏫 **École** : ESIEE Paris (2024-2025)
+> 🏫 **École** : ESIEE Paris (2025-2026)
 
 ## 📋 Vue d'ensemble
 
