@@ -71,12 +71,12 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
     if (selectedAnswer === null) return;
 
     setShowExplanation(true);
-    
+
     // Enregistrer la réponse si c'est la première fois
     if (!answeredQuestions.has(currentQuestion)) {
       setAnsweredQuestions(prev => new Set([...prev, currentQuestion]));
       setUserAnswers(prev => new Map([...prev, [currentQuestion, selectedAnswer]]));
-      
+
       if (selectedAnswer === question.correct_index) {
         setScore(prev => prev + 1);
       }
@@ -94,7 +94,7 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(prev => prev - 1);
-      
+
       // Restaurer la réponse précédente si elle existe
       const previousAnswer = userAnswers.get(currentQuestion - 1);
       if (previousAnswer !== undefined) {
@@ -135,23 +135,23 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
   // Écran d'accueil pour demander le nom
   if (!quizStarted) {
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg border">
         <div className="text-center">
           <div className="mb-8">
-            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">🧠</span>
             </div>
             <h2 className="text-3xl font-bold mb-4">{title}</h2>
-            <p className="text-lg text-gray-600 mb-2">
+            <p className="text-lg text-muted-foreground mb-2">
               {questions.length} questions vous attendent !
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               Testez vos connaissances et découvrez votre niveau
             </p>
           </div>
 
           <div className="mb-8">
-            <label htmlFor="playerName" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="playerName" className="block text-sm font-medium text-muted-foreground mb-2">
               Votre nom ou pseudo
             </label>
             <input
@@ -160,7 +160,7 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="Entrez votre nom..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-lg bg-background text-foreground"
+              className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-center text-lg bg-background text-foreground"
               maxLength={25}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && playerName.trim()) {
@@ -168,13 +168,13 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
                 }
               }}
             />
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               Votre nom apparaîtra dans le classement
             </p>
           </div>
 
           <div className="space-y-4">
-            <Button 
+            <Button
               onClick={startQuiz}
               disabled={!playerName.trim()}
               size="lg"
@@ -182,8 +182,8 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
             >
               🚀 Commencer le Quiz
             </Button>
-            
-            <div className="text-xs text-gray-500 space-y-1">
+
+            <div className="text-xs text-muted-foreground space-y-1">
               <p>• Durée estimée : 5-10 minutes</p>
               <p>• Votre temps sera chronométré</p>
               <p>• Vous pouvez naviguer entre les questions</p>
@@ -197,9 +197,9 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
   // Affichage final des résultats
   if (answeredQuestions.size === questions.length && isLastQuestion && showExplanation) {
     const percentage = Math.round((score / questions.length) * 100);
-    
+
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg border">
         <div className="text-center">
           <div className="mb-6">
             {percentage >= 80 ? (
@@ -207,40 +207,40 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
             ) : percentage >= 60 ? (
               <CheckCircle className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
             ) : (
-              <XCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
+              <XCircle className="h-16 w-16 text-destructive mx-auto mb-4" />
             )}
           </div>
-          
+
           <h2 className="text-3xl font-bold mb-2">Félicitations {playerName} !</h2>
-          <p className="text-lg text-gray-600 mb-4">Quiz terminé avec succès</p>
-          
+          <p className="text-lg text-muted-foreground mb-4">Quiz terminé avec succès</p>
+
           <div className="text-6xl font-bold mb-4">
             <span className={
-              percentage >= 80 ? 'text-green-600' : 
-              percentage >= 60 ? 'text-yellow-600' : 
-              'text-red-600'
+              percentage >= 80 ? 'text-green-600 dark:text-green-500' :
+                percentage >= 60 ? 'text-yellow-600 dark:text-yellow-500' :
+                  'text-destructive'
             }>
               {score}
             </span>
-            <span className="text-gray-400">/{questions.length}</span>
+            <span className="text-muted-foreground/50">/{questions.length}</span>
           </div>
-          
-          <p className="text-xl text-gray-600 mb-6">
+
+          <p className="text-xl text-muted-foreground mb-6">
             Votre score : {percentage}%
           </p>
-          
+
           <div className="mb-6">
             {percentage >= 80 && (
-              <p className="text-green-600 font-semibold">Excellent ! Vous maîtrisez parfaitement ce sujet.</p>
+              <p className="text-green-600 dark:text-green-500 font-semibold">Excellent ! Vous maîtrisez parfaitement ce sujet.</p>
             )}
             {percentage >= 60 && percentage < 80 && (
-              <p className="text-yellow-600 font-semibold">Bien joué ! Vous avez de bonnes connaissances.</p>
+              <p className="text-yellow-600 dark:text-yellow-500 font-semibold">Bien joué ! Vous avez de bonnes connaissances.</p>
             )}
             {percentage < 60 && (
-              <p className="text-red-600 font-semibold">Il serait bon de réviser pour améliorer vos connaissances.</p>
+              <p className="text-destructive font-semibold">Il serait bon de réviser pour améliorer vos connaissances.</p>
             )}
           </div>
-          
+
           <Button onClick={resetQuiz} className="px-8 py-2">
             Recommencer le Quiz
           </Button>
@@ -250,26 +250,26 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg">
+    <div className="max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-lg border">
       {/* En-tête avec progression */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">{title}</h2>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm text-gray-500">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="h-4 w-4" />
               <span>{formatTime(getElapsedTime())}</span>
             </div>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-muted-foreground">
               {currentQuestion + 1} / {questions.length}
             </span>
           </div>
         </div>
-        
+
         {/* Barre de progression */}
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+        <div className="w-full bg-secondary rounded-full h-2">
+          <div
+            className="bg-primary h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -280,25 +280,25 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
         <h3 className="text-lg font-semibold mb-4 leading-relaxed">
           {question.question}
         </h3>
-        
+
         {/* Choix de réponses */}
         <div className="space-y-3">
           {question.choices.map((choice, index) => {
             let buttonClass = "w-full p-4 text-left border-2 rounded-lg transition-all ";
-            
+
             if (showExplanation) {
               if (index === question.correct_index) {
-                buttonClass += "border-green-500 bg-green-50 text-green-800";
+                buttonClass += "border-green-500 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300";
               } else if (index === selectedAnswer && index !== question.correct_index) {
-                buttonClass += "border-red-500 bg-red-50 text-red-800";
+                buttonClass += "border-red-500 bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-300";
               } else {
-                buttonClass += "border-gray-200 bg-gray-50 text-gray-600";
+                buttonClass += "border-border bg-muted/50 text-muted-foreground";
               }
             } else {
               if (index === selectedAnswer) {
-                buttonClass += "border-blue-500 bg-blue-50 text-blue-800";
+                buttonClass += "border-primary bg-primary/10 text-primary";
               } else {
-                buttonClass += "border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-foreground";
+                buttonClass += "border-border hover:border-primary/50 hover:bg-muted text-foreground";
               }
             }
 
@@ -315,10 +315,10 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
                   </span>
                   <span>{choice}</span>
                   {showExplanation && index === question.correct_index && (
-                    <CheckCircle className="h-5 w-5 text-green-600 ml-auto" />
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-500 ml-auto" />
                   )}
                   {showExplanation && index === selectedAnswer && index !== question.correct_index && (
-                    <XCircle className="h-5 w-5 text-red-600 ml-auto" />
+                    <XCircle className="h-5 w-5 text-destructive ml-auto" />
                   )}
                 </div>
               </button>
@@ -329,9 +329,9 @@ export function Quiz({ questions, title = "Quiz", onQuizComplete }: QuizProps) {
 
       {/* Explication */}
       {showExplanation && (
-        <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
-          <h4 className="font-semibold text-blue-800 mb-2">Explication :</h4>
-          <p className="text-blue-700">{question.explanation}</p>
+        <div className="mb-6 p-4 bg-primary/5 border-l-4 border-primary rounded">
+          <h4 className="font-semibold text-primary mb-2">Explication :</h4>
+          <p className="text-foreground/90">{question.explanation}</p>
         </div>
       )}
 
